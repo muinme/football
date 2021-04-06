@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("sys/v1")
+@CrossOrigin(origins = "*")
+@RequestMapping("/football")
 public class UserController {
     @Autowired
     private UserService userService;

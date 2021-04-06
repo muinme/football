@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("sys/v1")
+@RequestMapping("/football")
 public class PitchController {
     @Autowired
     private PitchService pitchService;

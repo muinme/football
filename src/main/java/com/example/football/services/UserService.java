@@ -9,12 +9,19 @@ import java.util.List;
 
 public interface UserService {
     User createUser(User user);
+
     User findByUsername(String username);
+
     String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse);
+
     String logoutUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse);
+
     User getByIdUser(Integer id);
+
     void saveUser(User user);
+
     void deleteUser(User user);
+
     List<User> listAllUser();
 
 }
