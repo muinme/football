@@ -14,6 +14,7 @@ public class RequestMatch {
     private Integer id;
     private Integer user_id;
     private Integer wait_match_team_id;
+    private java.util.Date created;
     private String status;
 
 }

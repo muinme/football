@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -13,5 +14,10 @@ public class Permission implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
-    private String name;
+    private String api;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(api);
+    }
 }

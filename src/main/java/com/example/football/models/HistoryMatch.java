@@ -13,4 +13,5 @@ public class HistoryMatch {
     private Integer id;
     private Integer request_match_id;
     private String status;
+    private java.util.Date created;
 }
