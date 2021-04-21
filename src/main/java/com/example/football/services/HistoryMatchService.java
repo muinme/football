@@ -10,7 +10,8 @@ public interface HistoryMatchService {
 
     HistoryMatch getByIdHistoryMatch(Integer id);
 
-    void saveHistoryMatch(HistoryMatch historyMatch);
+    void saveHistoryMatch1(HistoryMatch historyMatch);
+    void saveHistoryMatch2(HistoryMatch historyMatch);
 
     List<HistoryMatch> listAllHistoryMatch();
 }

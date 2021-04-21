@@ -1,9 +1,7 @@
 package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.Pitch;
 import com.example.football.models.TeamFootBall;
-import com.example.football.repositories.PitchRepository;
 import com.example.football.repositories.TeamFootBallRepository;
 import com.example.football.services.TeamFootBallService;
 import org.springframework.beans.factory.annotation.Autowired;

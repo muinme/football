@@ -17,7 +17,6 @@ public class HistoryMatchController {
     private HistoryMatchService historyMatchService;
 
     @RequestMapping(value = {"/historyMatch/getAll"}, method = RequestMethod.GET)
-    @PreAuthorize("@appAuthorizer.authorize(authentication, 'getAll', '/football/historyMatch/getAll')")
     public List<HistoryMatch> list() {
         return historyMatchService.listAllHistoryMatch();
     }

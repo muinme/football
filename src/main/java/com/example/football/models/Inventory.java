@@ -6,14 +6,12 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "request_match")
-public class RequestMatch {
+@Table(name = "inventory")
+public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer user_id;
-    private Integer wait_match_team_id;
-    private java.util.Date created;
-    private String status;
+    private Integer pitch_detail_id;
+    private Integer pitch_id;
 
 }

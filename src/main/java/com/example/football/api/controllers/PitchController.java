@@ -28,10 +28,9 @@ public class PitchController {
     private UserServiceImpl jwtUserDetailsService;
 
     @GetMapping("/pitch")
-    public List<Pitch> list() {
-        return pitchService.listAllPitch();
+    public ResponseEntity<?> list() throws Exception {
+        return new ResponseEntity<>(pitchService.listAllPitch(), HttpStatus.OK);
     }
-
     @GetMapping("/pitch/{id}")
     public ResponseEntity<Pitch> get(@PathVariable Integer id) {
         try {

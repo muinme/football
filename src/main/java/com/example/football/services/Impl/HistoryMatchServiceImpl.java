@@ -25,7 +25,14 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
     }
 
     @Override
-    public void saveHistoryMatch(HistoryMatch historyMatch) {
+    public void saveHistoryMatch1(HistoryMatch historyMatch) {
+        historyMatch.setStatus("done");
+        historyMatchRepository.save(historyMatch);
+    }
+
+    @Override
+    public void saveHistoryMatch2(HistoryMatch historyMatch) {
+        historyMatch.setStatus("no done");
         historyMatchRepository.save(historyMatch);
     }
 

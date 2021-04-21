@@ -6,14 +6,15 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "request_match")
-public class RequestMatch {
+@Table(name = "request_pitch")
+public class RequestPitch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer user_id;
-    private Integer wait_match_team_id;
-    private java.util.Date created;
+    private Integer pitch_id;
+    private Integer pitch_detail_id;
     private String status;
+    private java.util.Date created;
 
 }

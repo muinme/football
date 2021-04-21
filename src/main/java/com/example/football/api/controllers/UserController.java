@@ -58,8 +58,8 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/user/getAll"}, method = RequestMethod.GET)
-    public List<User> list() {
-        return userService.listAllUser();
+    public ResponseEntity<?> list() throws Exception {
+        return new ResponseEntity<>(userService.listAllUser(), HttpStatus.OK);
     }
 
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
