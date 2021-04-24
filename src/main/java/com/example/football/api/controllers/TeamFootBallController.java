@@ -2,21 +2,24 @@ package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.Pitch;
+import com.example.football.models.TeamFootBall;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
 import com.example.football.services.PitchService;
+import com.example.football.services.TeamFootBallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.NoSuchElementException;
 
-@RestController
-@RequestMapping("/football")
-public class PitchController {
+public class TeamFootBallController {
     @Autowired
-    private PitchService pitchService;
+    private TeamFootBallService teamFootBallService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -27,31 +30,31 @@ public class PitchController {
     @Autowired
     private UserServiceImpl jwtUserDetailsService;
 
-    @GetMapping("/pitch")
+    @GetMapping("/teamFootBall")
     public ResponseEntity<?> list() throws Exception {
-        return new ResponseEntity<>(pitchService.listAllPitch(), HttpStatus.OK);
+        return new ResponseEntity<>(teamFootBallService.listAllTeamFootBall(), HttpStatus.OK);
     }
-    @GetMapping("/pitch/{id}")
-    public ResponseEntity<Pitch> get(@PathVariable Integer id) {
+    @GetMapping("/teamFootBall/{id}")
+    public ResponseEntity<TeamFootBall> get(@PathVariable Integer id) {
         try {
-            Pitch pitch = pitchService.getByIdPitch(id);
-            return new ResponseEntity<Pitch>(pitch, HttpStatus.OK);
+            TeamFootBall teamFootBall = teamFootBallService.getByIdTeamFootBall(id);
+            return new ResponseEntity<TeamFootBall>(teamFootBall, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<Pitch>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<TeamFootBall>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/pitch/create")
-    public Pitch create(@RequestBody Pitch pitch) {
-        return pitchService.createPitch(pitch);
+    public TeamFootBall create(@RequestBody TeamFootBall teamFootBall) {
+        return teamFootBallService.createTeamFootBall(teamFootBall);
     }
 
     @PostMapping("/pitch/update/{id}")
-    public ResponseEntity<?> update(@RequestBody Pitch pitch, @PathVariable Integer id){
+    public ResponseEntity<?> update(@RequestBody TeamFootBall teamFootBall, @PathVariable Integer id){
         try {
-            Pitch existPitch = pitchService.getByIdPitch(id);
+            TeamFootBall existTeamFootBall = teamFootBallService.getByIdTeamFootBall(id);
             try{
-                pitchService.savePitch(pitch);
+                teamFootBallService.saveTeamFootBall(teamFootBall);
                 return new ResponseEntity<>(HttpStatus.OK);
             }catch (Exception internalError)
             {
@@ -66,10 +69,9 @@ public class PitchController {
     @PostMapping("/pitch/delete/{id}")
     public void delete(@PathVariable Integer id) {
         try {
-            pitchService.deletePitch(id);
+            teamFootBallService.deleteTeamFootBall(id);
         } catch (NoSuchElementException e) {
 
         }
     }
-
 }

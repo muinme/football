@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private AuthenticationServiceImpl authenticationService;
 
     @Override
-    public User createUser(User user){
+    public User createUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setCreated(new Date());
         return userRepository.save(user);
@@ -50,9 +50,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse){
+    public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse) {
         final String token = jwtUtil.generateToken(userDetails);
-
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
         return token;
     }
