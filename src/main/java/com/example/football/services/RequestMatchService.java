@@ -5,11 +5,11 @@ import com.example.football.models.RequestMatch;
 import java.util.List;
 
 public interface RequestMatchService {
-    RequestMatch createRequestMatch(RequestMatch requestMatch);
+    RequestMatch createRequestMatch(Integer id,String username);
 
     RequestMatch getByIdRequestMatch(Integer id);
 
     void saveRequestMatch(RequestMatch requestMatch);
-
+    RequestMatch getRequestMatchByUsername(String username);
     List<RequestMatch> listAllRequestMatch();
 }

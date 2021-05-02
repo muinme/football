@@ -9,6 +9,8 @@ public interface DetailPitchService {
 
     DetailPitch getByIdDetailPitch(Integer id);
 
+    void updateDetailPitchOfTime(Integer pitch_id, Integer timeslot_id, Integer day_id, String status_hire);
+
     void saveDetailPitch(DetailPitch detailPitch);
 
     void deleteDetailPitch(Integer id);

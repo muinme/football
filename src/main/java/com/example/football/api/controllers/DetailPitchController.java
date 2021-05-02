@@ -43,9 +43,9 @@ public class DetailPitchController {
         }
     }
 
-    @PostMapping("/detail_pitch/create")
-    public DetailPitch create(@RequestBody DetailPitch detailPitch) {
-        return detailPitchService.createDetailPitch(detailPitch);
+    @PostMapping("/detail_pitch/updateStatus/{pitch_id}/{timeslot_id}/{day_id}/{status_hire}")
+    public void updateDetailPitchStatusOfTime(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id, @PathVariable Integer day_id, @PathVariable String status_hire) {
+        detailPitchService.updateDetailPitchOfTime(pitch_id, timeslot_id, day_id, status_hire);
     }
 
     @PostMapping("/detail_pitch/update/{id}")

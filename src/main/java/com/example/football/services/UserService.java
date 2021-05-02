@@ -18,9 +18,17 @@ public interface UserService {
 
     User getByIdUser(Integer id);
 
+    User findByPitchId(String id);
+
+    User findByFootBallId(String id);
+
+    User updateProfileUser(User user, String username);
+
+    User updatePassWordUser(User user, String username);
+
     void saveUser(User user);
 
-    void deleteUser(User user);
+    void deleteUser(Integer id);
 
     List<User> listAllUser();
 

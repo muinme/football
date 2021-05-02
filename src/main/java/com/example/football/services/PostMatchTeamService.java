@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface PostMatchTeamService {
 
-    PostMatchTeam createPostMatchTeam(PostMatchTeam postMatchTeam);
+    PostMatchTeam createPostMatchTeam(PostMatchTeam postMatchTeam, String nameTeamFootBall);
 
     PostMatchTeam getByIdPostMatchTeam(Integer id);
 

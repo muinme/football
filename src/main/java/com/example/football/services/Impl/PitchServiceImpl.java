@@ -44,7 +44,7 @@ public class PitchServiceImpl implements PitchService {
     }
 
     @Override
-    public List<Pitch> listAllPitch() {
+    public List<Pitch > listAllPitch() {
         return pitchRepository.findAll();
     }
 }

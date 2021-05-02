@@ -2,6 +2,8 @@ package com.example.football.services.Impl;
 
 import com.example.football.models.RequestMatch;
 import com.example.football.repositories.RequestMatchRepository;
+import com.example.football.repositories.UserRepository;
+import com.example.football.services.MailService;
 import com.example.football.services.RequestMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,23 @@ import java.util.List;
 public class RequestMatchServiceImpl implements RequestMatchService {
     @Autowired
     private RequestMatchRepository requestMatchRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private MailService mailService;
+
     @Override
-    public RequestMatch createRequestMatch(RequestMatch requestMatch) {
+    public RequestMatch createRequestMatch(Integer id, String username) {
+        RequestMatch requestMatch = new RequestMatch();
+        Integer user_id = userRepository.getIdByUserName(username);
+        System.out.println(username);
+        requestMatch.setWait_match_team_id(id);
+        requestMatch.setUser_id(user_id);
         requestMatch.setCreated(new Date());
+        requestMatch.setStatus("0");
+        mailService.sendEmailBatDoi(username, id);
         return requestMatchRepository.save(requestMatch);
     }
 
@@ -27,6 +43,12 @@ public class RequestMatchServiceImpl implements RequestMatchService {
     @Override
     public void saveRequestMatch(RequestMatch requestMatch) {
         requestMatchRepository.save(requestMatch);
+    }
+
+    @Override
+    public RequestMatch getRequestMatchByUsername(String username) {
+        return requestMatchRepository.findByUsername(username);
+
     }
 
     @Override

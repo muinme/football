@@ -1,6 +1,8 @@
 package com.example.football.models;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -17,5 +19,10 @@ public class User {
     private String phone;
     private String email;
     private String image;
+    @Transient
+    MultipartFile file;
     private java.util.Date created;
+
+
+
 }

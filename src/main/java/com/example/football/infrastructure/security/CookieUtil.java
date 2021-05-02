@@ -1,7 +1,6 @@
 package com.example.football.infrastructure.security;
 
 import org.springframework.web.util.WebUtils;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

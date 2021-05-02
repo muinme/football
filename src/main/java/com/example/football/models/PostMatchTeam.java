@@ -18,5 +18,9 @@ public class PostMatchTeam {
     private String category;
     private String levelwant;
     private String note;
+    private java.util.Date playdate;
+    private String againt;
+    private String address;
+    private String status;
     private java.util.Date created;
 }

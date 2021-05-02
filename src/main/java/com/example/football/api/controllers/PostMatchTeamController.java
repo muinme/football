@@ -1,6 +1,5 @@
 package com.example.football.api.controllers;
 
-import com.example.football.models.DetailPitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.services.PostMatchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/football")
 public class PostMatchTeamController {
     @Autowired
     private PostMatchTeamService postMatchTeamService;
 
     @RequestMapping(value = {"/postMatchTeam/getAll"}, method = RequestMethod.GET)
-    public List<PostMatchTeam> list() {
+    public List<PostMatchTeam> listPostMatchTeam() {
         return postMatchTeamService.listAllPostMatchTeam();
     }
 
     @RequestMapping(value = {"/postMatchTeam/{id}"}, method = RequestMethod.GET)
-    public ResponseEntity<PostMatchTeam> get(@PathVariable Integer id) {
+    public ResponseEntity<PostMatchTeam> getPostMatchTeam(@PathVariable Integer id) {
         try {
             PostMatchTeam postMatchTeam = postMatchTeamService.getByIdPostMatchTeam(id);
             return new ResponseEntity<PostMatchTeam>(postMatchTeam, HttpStatus.OK);
@@ -29,9 +31,9 @@ public class PostMatchTeamController {
             return new ResponseEntity<PostMatchTeam>(HttpStatus.NOT_FOUND);
         }
     }
-    @RequestMapping(value = {"/postMatchTeam/create"}, method = RequestMethod.POST)
-    public PostMatchTeam create(@RequestBody PostMatchTeam postMatchTeam) {
-        return postMatchTeamService.createPostMatchTeam(postMatchTeam);
+    @RequestMapping(value = {"/postMatchTeam/create/{nameTeamFootBall}"}, method = RequestMethod.POST)
+    public PostMatchTeam create(@RequestBody PostMatchTeam postMatchTeam, @PathVariable String nameTeamFootBall) {
+        return postMatchTeamService.createPostMatchTeam(postMatchTeam, nameTeamFootBall);
     }
 
     @RequestMapping(value = {"/postMatchTeam/update/{id}"}, method = RequestMethod.POST)

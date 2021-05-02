@@ -27,7 +27,7 @@ public class PitchController {
     @Autowired
     private UserServiceImpl jwtUserDetailsService;
 
-    @GetMapping("/pitch")
+    @GetMapping("/pitch/getAll")
     public ResponseEntity<?> list() throws Exception {
         return new ResponseEntity<>(pitchService.listAllPitch(), HttpStatus.OK);
     }

@@ -1,22 +1,21 @@
 package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.Pitch;
 import com.example.football.models.TeamFootBall;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
-import com.example.football.services.PitchService;
 import com.example.football.services.TeamFootBallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
+
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/football")
 public class TeamFootBallController {
     @Autowired
     private TeamFootBallService teamFootBallService;
@@ -30,7 +29,7 @@ public class TeamFootBallController {
     @Autowired
     private UserServiceImpl jwtUserDetailsService;
 
-    @GetMapping("/teamFootBall")
+    @GetMapping("/teamFootBall/getAll")
     public ResponseEntity<?> list() throws Exception {
         return new ResponseEntity<>(teamFootBallService.listAllTeamFootBall(), HttpStatus.OK);
     }
@@ -44,12 +43,12 @@ public class TeamFootBallController {
         }
     }
 
-    @PostMapping("/pitch/create")
+    @PostMapping("/teamFootBall/create")
     public TeamFootBall create(@RequestBody TeamFootBall teamFootBall) {
         return teamFootBallService.createTeamFootBall(teamFootBall);
     }
 
-    @PostMapping("/pitch/update/{id}")
+    @PostMapping("/teamFootBall/update/{id}")
     public ResponseEntity<?> update(@RequestBody TeamFootBall teamFootBall, @PathVariable Integer id){
         try {
             TeamFootBall existTeamFootBall = teamFootBallService.getByIdTeamFootBall(id);
@@ -66,7 +65,7 @@ public class TeamFootBallController {
         }
     }
 
-    @PostMapping("/pitch/delete/{id}")
+    @PostMapping("/teamFootBall/delete/{id}")
     public void delete(@PathVariable Integer id) {
         try {
             teamFootBallService.deleteTeamFootBall(id);

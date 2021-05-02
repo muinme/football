@@ -5,6 +5,7 @@ import com.example.football.models.Pitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.repositories.PitchRepository;
 import com.example.football.repositories.PostMatchTeamRepository;
+import com.example.football.repositories.TeamFootBallRepository;
 import com.example.football.services.PostMatchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,12 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     @Autowired
     private AuthenticationServiceImpl authenticationService;
 
+    @Autowired
+    private TeamFootBallRepository teamFootBallRepository;
+
     @Override
-    public PostMatchTeam createPostMatchTeam(PostMatchTeam postMatchTeam) {
+    public PostMatchTeam createPostMatchTeam(PostMatchTeam postMatchTeam, String nameTeamFootBall) {
+        postMatchTeam.setFootball_id(teamFootBallRepository.findIdByNameTeamFootBall(nameTeamFootBall));
         postMatchTeam.setCreated(new Date());
         return postMatchTeamRepository.save(postMatchTeam);
     }
@@ -46,6 +51,6 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
 
     @Override
     public List<PostMatchTeam> listAllPostMatchTeam() {
-        return postMatchTeamRepository.findAll();
+        return postMatchTeamRepository.findListPostMatchTeam();
     }
 }

@@ -2,7 +2,10 @@ package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
+import com.example.football.models.DetailPitch;
 import com.example.football.models.User;
+import com.example.football.repositories.DetailPitchRepository;
+import com.example.football.repositories.InventoryRepository;
 import com.example.football.repositories.UserRepository;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -25,6 +29,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
+    private DetailPitchRepository detailPitchRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
@@ -36,17 +43,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setCreated(new Date());
         return userRepository.save(user);
     }
-
     @Override
     public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        User userPrincipal = new User();
-        if (null != user) {
-            Set<String> authorities = new HashSet<>();
-            userPrincipal.setUsername(user.getUsername());
-            userPrincipal.setPassword(user.getPassword());
-        }
-        return userPrincipal;
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByPitchId(String id) {
+        return userRepository.findByPitchId(id);
+    }
+
+    @Override
+    public User findByFootBallId(String id) {
+        return userRepository.findByFootBallId(id);
     }
 
     @Override
@@ -59,6 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String logoutUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         jwtUtil.invalidateRelatedTokens(httpServletRequest);
+        CookieUtil.getValue(httpServletRequest, "JWT-TOKEN");
         CookieUtil.clear(httpServletResponse, jwtTokenCookieName);
         return "logout....";
     }
@@ -69,19 +79,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User updateProfileUser(User user, String username) {
+        User existingUser = userRepository.findByUsername(username);
+        existingUser.setFullname(user.getFullname());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPhone(user.getPhone());
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public User updatePassWordUser(User user, String username) {
+        User existingUser = userRepository.findByUsername(username);
+        existingUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        return userRepository.save(existingUser);
+    }
+
+    @Override
     public void saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(User user) {
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userRepository.save(user);
+    public void deleteUser(Integer id) {
+        userRepository.deleteById(id);
     }
 
     @Override
     public List<User> listAllUser() {
+
         return userRepository.findAll();
     }
 

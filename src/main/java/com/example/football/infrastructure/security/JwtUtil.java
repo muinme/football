@@ -73,7 +73,6 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
     public void invalidateRelatedTokens(HttpServletRequest httpServletRequest) {
-        System.out.println(httpServletRequest);
         RedisUtil.INSTANCE.srem(JWT_SECRET, (String) httpServletRequest.getAttribute("username"));
     }
 }

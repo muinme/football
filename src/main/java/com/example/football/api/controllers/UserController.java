@@ -1,11 +1,13 @@
 package com.example.football.api.controllers;
 
+import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.JwtRequest;
 import com.example.football.models.JwtResponse;
 import com.example.football.models.User;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
+import com.example.football.services.RequestMatchService;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +17,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,6 +28,7 @@ import java.util.NoSuchElementException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/football")
 public class UserController {
+    private static final String jwtTokenCookieName = "JWT-TOKEN";
     @Autowired
     private UserService userService;
 
@@ -50,19 +55,33 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/logout"}, method = RequestMethod.POST)
-    public ResponseEntity<?> deleteAuthenticationToken(@RequestBody JwtRequest authenticationRequest, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) throws Exception {
-        authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        String username = authenticationRequest.getUsername();
+
+    public ResponseEntity<?> deleteAuthenticationToken(HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) throws Exception {
+        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+
+//        authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+//        String username = authenticationRequest.getUsername();
+
         httpServletRequest.setAttribute("username", username);
         return ResponseEntity.ok(new JwtResponse(userService.logoutUser(httpServletRequest, httpServletResponse)));
     }
 
     @RequestMapping(value = {"/user/getAll"}, method = RequestMethod.GET)
     public ResponseEntity<?> list() throws Exception {
+
         return new ResponseEntity<>(userService.listAllUser(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/userById/{id}"}, method = RequestMethod.GET)
     public ResponseEntity<User> get(@PathVariable Integer id) {
         try {
             User user = userService.getByIdUser(id);
@@ -71,9 +90,73 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
     }
-
+    @RequestMapping(value = {"/user/{username}"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getByUsername(@PathVariable String username) {
+        try {
+            User user = userService.findByUsername(username);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @RequestMapping(value = {"/userByPitchId/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getByPitchIdId(@PathVariable String id) {
+        try {
+            User user = userService.findByPitchId(id);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @RequestMapping(value = {"/userByFootBallId/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getByFootBallId(@PathVariable String id) {
+        try {
+            User user = userService.findByFootBallId(id);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @RequestMapping(value = {"/userByUsername"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getUsername(HttpServletRequest httpServletRequest) {
+        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        try {
+            User user = userService.findByUsername(username);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @RequestMapping(value = {"/userUsernameRequestMatch"}, method = RequestMethod.GET)
+    public ResponseEntity<User> getUsernameRequestMatch(HttpServletRequest httpServletRequest) {
+        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        try {
+            User user = userService.findByUsername(username);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
     @RequestMapping(value = {"/user/update/{id}"}, method = RequestMethod.POST)
-    public ResponseEntity<?> update(@RequestBody User user, @PathVariable Integer id) {
+    public ResponseEntity<?> updateById(@RequestBody User user, @PathVariable Integer id) {
         try {
             User existUser = userService.getByIdUser(id);
             try {
@@ -88,11 +171,43 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = {"/user/updatePassWordByUsername/{username}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> updatePassWordByUsername(@RequestBody User user, @PathVariable String username) {
+        try {
+            userService.updatePassWordUser(user, username);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception internalError) {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @RequestMapping(value = {"/user/updateProfileByUsername/{username}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> updateProfileByUsername(@RequestBody User user, @PathVariable String username) {
+            try {
+                userService.updateProfileUser(user, username);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception internalError) {
+                internalError.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
+
+
     @RequestMapping(value = {"/user/delete/{id}"}, method = RequestMethod.POST)
-    public ResponseEntity<?> delete(@RequestBody User user, @PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         try {
             User existUser = userService.getByIdUser(id);
-            userService.deleteUser(user);
+            userService.deleteUser(existUser.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @RequestMapping(value = {"/user/delete/{username}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> deleteByUsername(@RequestBody User user, @PathVariable String username) {
+        try {
+            User existUser = userService.findByUsername(username);
+            userService.deleteUser(existUser.getId());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
