@@ -2,15 +2,13 @@ package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.HistoryMatch;
-import com.example.football.models.Pitch;
-import com.example.football.models.PostMatchTeam;
 import com.example.football.models.RequestMatch;
-import com.example.football.services.HistoryMatchService;
 import com.example.football.services.RequestMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -48,7 +46,7 @@ public class RequestMatchController {
     }
 
     @RequestMapping(value = {"/requestMatch/Username"}, method = RequestMethod.GET)
-    public RequestMatch getUserIdRequestMatch(HttpServletRequest httpServletRequest) {
+    public RequestMatch getRequestMatch(HttpServletRequest httpServletRequest) {
         String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");

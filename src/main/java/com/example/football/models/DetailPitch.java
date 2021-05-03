@@ -17,5 +17,6 @@ public class DetailPitch {
     private Integer count_id;
     private Integer type_pitch_id;
     private String status_hire;
+    private Integer number_pitch_id;
     private java.util.Date last_update;
 }

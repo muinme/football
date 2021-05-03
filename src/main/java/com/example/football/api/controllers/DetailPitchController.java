@@ -2,6 +2,7 @@ package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.DetailPitch;
+import com.example.football.models.PostMatchTeam;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.DetailPitchService;
 import com.example.football.services.Impl.UserServiceImpl;
@@ -33,8 +34,14 @@ public class DetailPitchController {
         return detailPitchService.listAllDetailPitch();
     }
 
-    @GetMapping("/detail_pitch/{id}")
-    public ResponseEntity<DetailPitch> get(@PathVariable Integer id) {
+    @GetMapping("/detail_pitch/{pitch_id}/{timeslot_id}/{day_id}")
+    public List<DetailPitch> getListDetailPitch(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id,  @PathVariable Integer day_id) {
+
+        return detailPitchService.getListDetailPitch(pitch_id, timeslot_id, day_id);
+
+    }
+    @RequestMapping(value = {"/detailPitch/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<DetailPitch> getDetailPitch(@PathVariable Integer id) {
         try {
             DetailPitch detailPitch = detailPitchService.getByIdDetailPitch(id);
             return new ResponseEntity<DetailPitch>(detailPitch, HttpStatus.OK);
@@ -42,28 +49,34 @@ public class DetailPitchController {
             return new ResponseEntity<DetailPitch>(HttpStatus.NOT_FOUND);
         }
     }
-
-    @PostMapping("/detail_pitch/updateStatus/{pitch_id}/{timeslot_id}/{day_id}/{status_hire}")
-    public void updateDetailPitchStatusOfTime(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id, @PathVariable Integer day_id, @PathVariable String status_hire) {
-        detailPitchService.updateDetailPitchOfTime(pitch_id, timeslot_id, day_id, status_hire);
-    }
-
-    @PostMapping("/detail_pitch/update/{id}")
-    public ResponseEntity<?> update(@RequestBody DetailPitch detailPitch, @PathVariable Integer id){
+    @PostMapping("/detail_pitch/updateStatus/{pitch_id}/{timeslot_id}/{day_id}/{number_pitch_id}/{status_hire}")
+    public ResponseEntity<?> updateDetailPitchStatusOfTime(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id, @PathVariable Integer day_id, @PathVariable Integer number_pitch_id ,@PathVariable String status_hire) {
         try {
-            DetailPitch existDetailPitch = detailPitchService.getByIdDetailPitch(id);
-            try{
-                detailPitchService.saveDetailPitch(detailPitch);
-                return new ResponseEntity<>(HttpStatus.OK);
-            }catch (Exception internalError)
-            {
-                internalError.printStackTrace();
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            detailPitchService.updateDetailPitchOfTime(pitch_id, timeslot_id, day_id, number_pitch_id, status_hire);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception internalError)
+        {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PostMapping("/detail_pitch/update/{id}")
+//    public ResponseEntity<?> update(@RequestBody DetailPitch detailPitch, @PathVariable Integer id){
+//        try {
+//            DetailPitch existDetailPitch = detailPitchService.getByIdDetailPitch(id);
+//            try{
+//                detailPitchService.saveDetailPitch(detailPitch);
+//                return new ResponseEntity<>(HttpStatus.OK);
+//            }catch (Exception internalError)
+//            {
+//                internalError.printStackTrace();
+//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @PostMapping("/detail_pitch/delete/{id}")
     public void delete(@PathVariable Integer id) {

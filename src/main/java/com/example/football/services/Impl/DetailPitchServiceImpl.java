@@ -32,15 +32,20 @@ public class DetailPitchServiceImpl implements DetailPitchService{
         return detailPitchRepository.save(detailPitch);
     }
 
-
     @Override
     public DetailPitch getByIdDetailPitch(Integer id) {
         return detailPitchRepository.findById(id).get();
     }
 
+
     @Override
-    public void updateDetailPitchOfTime(Integer pitch_id, Integer timeslot_id, Integer day_id, String status_hire) {
-        DetailPitch exsitDetailPitch = detailPitchRepository.getListDetailPitch(timeslot_id, pitch_id, day_id);
+    public List<DetailPitch> getListDetailPitch(Integer pitch_id, Integer timeslot_id, Integer day_id) {
+        return detailPitchRepository.getListDetailPitch(timeslot_id, pitch_id, day_id,"0");
+    }
+
+    @Override
+    public void updateDetailPitchOfTime(Integer pitch_id, Integer timeslot_id, Integer day_id, Integer number_pitch_id,String status_hire) {
+        DetailPitch exsitDetailPitch = detailPitchRepository.getDetailPitch(timeslot_id, pitch_id, day_id, number_pitch_id);
         exsitDetailPitch.setStatus_hire(status_hire);
         System.out.println(exsitDetailPitch);
         detailPitchRepository.save(exsitDetailPitch);
