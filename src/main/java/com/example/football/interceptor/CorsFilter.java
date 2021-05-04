@@ -23,7 +23,7 @@ public class CorsFilter extends OncePerRequestFilter {
                                     final FilterChain filterChain) throws ServletException, IOException {
             LOG.info("is called");
 
-        response.addHeader("Access-Control-Allow-Origin", "http://traibonglan.com:80");
+        response.addHeader("Access-Control-Allow-Origin", "http://traibonglan.com");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, HEAD");
         response.addHeader("Access-Control-Allow-Headers",
                 "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
