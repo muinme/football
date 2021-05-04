@@ -21,7 +21,7 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
-        cookie.setDomain("localhost");
+        cookie.setDomain("traibonglan.com");
         httpServletResponse.addCookie(cookie);
     }
 

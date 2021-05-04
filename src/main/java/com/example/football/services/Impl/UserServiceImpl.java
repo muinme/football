@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse) {
         final String token = jwtUtil.generateToken(userDetails);
-        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
+        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "traibonglan.com");
         return token;
     }
 
