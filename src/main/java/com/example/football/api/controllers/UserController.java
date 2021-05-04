@@ -117,7 +117,7 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
     }
-    @RequestMapping(value = {"/userByUsername"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/userByUsername"}, method = RequestMethod.POST)
     public ResponseEntity<User> getUsername(HttpServletRequest httpServletRequest) {
         String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
