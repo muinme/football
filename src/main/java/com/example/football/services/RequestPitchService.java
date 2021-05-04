@@ -8,7 +8,7 @@ import java.util.List;
 public interface RequestPitchService {
     RequestPitch createRequestPitch(Integer pitch_id, Integer pitch_detail_id, String username);
 
-    RequestPitch getRequestPitchByUsername(String username);
+    List<RequestPitch> getRequestPitchByUsername(String username);
 
     RequestPitch getByIdRequestPitch(Integer id);
 

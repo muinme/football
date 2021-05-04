@@ -46,7 +46,7 @@ public class RequestMatchServiceImpl implements RequestMatchService {
     }
 
     @Override
-    public RequestMatch getRequestMatchByUsername(String username) {
+    public List<RequestMatch> getRequestMatchByUsername(String username) {
         return requestMatchRepository.findByUsername(username);
 
     }

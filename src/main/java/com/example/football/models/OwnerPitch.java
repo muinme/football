@@ -12,5 +12,6 @@ public class OwnerPitch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer pitch_id;
+    private Integer user_id;
 
 }

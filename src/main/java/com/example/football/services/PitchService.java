@@ -13,4 +13,6 @@ public interface PitchService {
         void deletePitch(Integer id);
 
         List<Pitch> listAllPitch();
+
+        List<Pitch> getPitchByUsername(String username);
 }

@@ -10,6 +10,6 @@ public interface RequestMatchService {
     RequestMatch getByIdRequestMatch(Integer id);
 
     void saveRequestMatch(RequestMatch requestMatch);
-    RequestMatch getRequestMatchByUsername(String username);
+    List<RequestMatch> getRequestMatchByUsername(String username);
     List<RequestMatch> listAllRequestMatch();
 }

@@ -1,7 +1,9 @@
 package com.example.football.api.controllers;
 
+import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.Pitch;
+import com.example.football.models.RequestPitch;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
 import com.example.football.services.PitchService;
@@ -9,17 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/football")
 public class PitchController {
-    @Autowired
-    private PitchService pitchService;
+    private static final String jwtTokenCookieName = "JWT-TOKEN";
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private PitchService pitchService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -39,6 +42,20 @@ public class PitchController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<Pitch>(HttpStatus.NOT_FOUND);
         }
+    }
+    @RequestMapping(value = {"/pitch/Username"}, method = RequestMethod.GET)
+    public List<Pitch> getPitch(HttpServletRequest httpServletRequest) {
+        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return pitchService.getPitchByUsername(username);
     }
 
     @PostMapping("/pitch/create")

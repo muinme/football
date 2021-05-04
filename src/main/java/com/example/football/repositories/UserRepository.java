@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(@Param("username") String username);
 
     @Query(value = "SELECT u.* FROM users u\n" +
-            "INNER JOIN owner_pitch op ON op.id = u.id \n" +
+            "INNER JOIN owner_pitch op ON op.user_id = u.id \n" +
             "WHERE op.pitch_id =:id", nativeQuery = true)
     User findByPitchId(@Param("id") String id);
 

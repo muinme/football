@@ -38,7 +38,7 @@ public class RequestPitchServiceImpl implements RequestPitchService {
         return requestPitchRepository.save(requestPitch);
     }
     @Override
-    public RequestPitch getRequestPitchByUsername(String username) {
+    public List<RequestPitch> getRequestPitchByUsername(String username) {
         return requestPitchRepository.findByUsername(username);
 
     }

@@ -6,7 +6,11 @@ import com.example.football.services.HistoryRentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -19,6 +23,9 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
 
     @Autowired
     private DetailPitchRepository detailPitchRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public HistoryRental saveHistoryRental1(Integer id) {
@@ -54,5 +61,22 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
     @Override
     public List<HistoryRental> listAllHistoryRental() {
         return null;
+    }
+
+    @Override
+    public List<PieInfo> pieInfoList() {
+        List<Object> resultList = entityManager.createNativeQuery("SELECT COUNT(*) value , status x FROM history_rental hr \n" +
+                "GROUP BY status").getResultList();
+        List<PieInfo> data = new ArrayList<PieInfo>();
+
+        Iterator it = resultList.iterator();
+        while (it.hasNext()) {
+            Object[] row = (Object[]) it.next();
+            PieInfo summary = new PieInfo();
+            summary.setX("1".equals(String.valueOf(row[1])) ? "Thành Công" : "Thất bại");
+            summary.setValue(Long.valueOf(String.valueOf(row[0])));
+            data.add(summary);
+        }
+        return data;
     }
 }

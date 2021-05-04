@@ -1,5 +1,6 @@
 package com.example.football.api.controllers;
 
+import com.example.football.models.PieInfo;
 import com.example.football.models.Price;
 import com.example.football.models.TimeSlotPitch;
 import com.example.football.services.PriceService;
@@ -7,11 +8,9 @@ import com.example.football.services.TimeSlotPitchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -28,5 +27,9 @@ public class TimeSlotPitchController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<TimeSlotPitch>(HttpStatus.NOT_FOUND);
         }
+    }
+    @RequestMapping(value = {"/timeSlotPitch/getAllInfo"}, method = RequestMethod.GET)
+    public ResponseEntity<List<PieInfo>> listPieInfoTimeSlotPitchService() {
+        return new ResponseEntity<List<PieInfo>>(this.timeSlotPitchService.pieInfoList(), HttpStatus.OK);
     }
 }

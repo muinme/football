@@ -1,6 +1,7 @@
 package com.example.football.services;
 
 import com.example.football.models.HistoryRental;
+import com.example.football.models.PieInfo;
 
 import java.util.List;
 
@@ -9,4 +10,5 @@ public interface HistoryRentalService {
     HistoryRental saveHistoryRental2(Integer id);
 
     List<HistoryRental> listAllHistoryRental();
+    List<PieInfo> pieInfoList();
 }

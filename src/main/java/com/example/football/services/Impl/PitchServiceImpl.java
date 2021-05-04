@@ -28,6 +28,7 @@ public class PitchServiceImpl implements PitchService {
         return pitchRepository.save(pitch);
     }
 
+
     @Override
     public Pitch getByIdPitch(Integer id) {
         return pitchRepository.findById(id).get();
@@ -46,5 +47,10 @@ public class PitchServiceImpl implements PitchService {
     @Override
     public List<Pitch > listAllPitch() {
         return pitchRepository.findAll();
+    }
+
+    @Override
+    public List<Pitch> getPitchByUsername(String username) {
+        return pitchRepository.findByUsername(username);
     }
 }

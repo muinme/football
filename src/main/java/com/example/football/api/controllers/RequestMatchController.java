@@ -46,7 +46,7 @@ public class RequestMatchController {
     }
 
     @RequestMapping(value = {"/requestMatch/Username"}, method = RequestMethod.GET)
-    public RequestMatch getRequestMatch(HttpServletRequest httpServletRequest) {
+    public List<RequestMatch> getRequestMatch(HttpServletRequest httpServletRequest) {
         String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
