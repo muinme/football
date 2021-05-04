@@ -55,6 +55,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET);
         String token = builder.compact();
 //        RedisUtil.INSTANCE.sadd(JWT_SECRET, subject);
+        System.out.println("thoiHan         " + JWT_EXPIRATION * 1000);
         return token;
     }
     public String parseToken(HttpServletRequest httpServletRequest){
