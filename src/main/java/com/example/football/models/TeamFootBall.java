@@ -21,4 +21,5 @@ public class TeamFootBall {
     private String level;
     private String introduce;
     private java.util.Date created;
+    private String address;
 }

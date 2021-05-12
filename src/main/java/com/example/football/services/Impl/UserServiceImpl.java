@@ -2,10 +2,8 @@ package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.DetailPitch;
 import com.example.football.models.User;
 import com.example.football.repositories.DetailPitchRepository;
-import com.example.football.repositories.InventoryRepository;
 import com.example.football.repositories.UserRepository;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
