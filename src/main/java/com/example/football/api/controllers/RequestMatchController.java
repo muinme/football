@@ -24,6 +24,9 @@ public class RequestMatchController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private CookieUtil cookieUtil;
+
     @RequestMapping(value = {"/requestMatch/getAll"}, method = RequestMethod.GET)
     public List<RequestMatch> list() {
         return requestMatchService.listAllRequestMatch();
@@ -32,7 +35,7 @@ public class RequestMatchController {
     @RequestMapping(value = {"/requestMatch/create/{id}"}, method = RequestMethod.POST)
     public RequestMatch create(@PathVariable Integer id, HttpServletRequest httpServletRequest) {
         System.out.println(id);
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
@@ -47,7 +50,7 @@ public class RequestMatchController {
 
     @RequestMapping(value = {"/requestMatch/Username"}, method = RequestMethod.GET)
     public List<RequestMatch> getRequestMatch(HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;

@@ -53,4 +53,10 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     public List<PostMatchTeam> listAllPostMatchTeam() {
         return postMatchTeamRepository.findListPostMatchTeam();
     }
+
+    @Override
+    public List<PostMatchTeam> listFindByUsername(String username) {
+        return postMatchTeamRepository.findListByUsername(username);
+    }
 }
+

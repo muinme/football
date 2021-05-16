@@ -3,8 +3,6 @@ package com.example.football.api.controllers;
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.Pitch;
-import com.example.football.models.RequestPitch;
-import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
 import com.example.football.services.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ public class PitchController {
 
     @Autowired
     private PitchService pitchService;
+
+    @Autowired
+    private CookieUtil cookieUtil;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -45,7 +46,7 @@ public class PitchController {
     }
     @RequestMapping(value = {"/pitch/Username"}, method = RequestMethod.GET)
     public List<Pitch> getPitch(HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
@@ -59,8 +60,18 @@ public class PitchController {
     }
 
     @PostMapping("/pitch/create")
-    public Pitch create(@RequestBody Pitch pitch) {
-        return pitchService.createPitch(pitch);
+    public Pitch create(@RequestBody Pitch pitch, HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return pitchService.createPitch(pitch, username);
     }
 
     @PostMapping("/pitch/update/{id}")

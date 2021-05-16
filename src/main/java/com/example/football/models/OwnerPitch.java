@@ -13,5 +13,5 @@ public class OwnerPitch {
     private Integer id;
     private Integer pitch_id;
     private Integer user_id;
-
+    private java.util.Date created;
 }

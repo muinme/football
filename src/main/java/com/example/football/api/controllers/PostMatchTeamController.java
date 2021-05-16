@@ -1,5 +1,8 @@
 package com.example.football.api.controllers;
 
+import com.example.football.infrastructure.security.CookieUtil;
+import com.example.football.infrastructure.security.JwtUtil;
+import com.example.football.models.Pitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.services.PostMatchTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,8 +18,16 @@ import java.util.NoSuchElementException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/football")
 public class PostMatchTeamController {
+    private static final String jwtTokenCookieName = "JWT-TOKEN";
+
     @Autowired
     private PostMatchTeamService postMatchTeamService;
+
+    @Autowired
+    private CookieUtil cookieUtil;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @RequestMapping(value = {"/postMatchTeam/getAll"}, method = RequestMethod.GET)
     public List<PostMatchTeam> listPostMatchTeam() {
@@ -31,6 +43,21 @@ public class PostMatchTeamController {
             return new ResponseEntity<PostMatchTeam>(HttpStatus.NOT_FOUND);
         }
     }
+    @RequestMapping(value = {"/postMatchTeam/Username"}, method = RequestMethod.GET)
+    public List<PostMatchTeam> getPitch(HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return postMatchTeamService.listFindByUsername(username);
+    }
+
     @RequestMapping(value = {"/postMatchTeam/create/{nameTeamFootBall}"}, method = RequestMethod.POST)
     public PostMatchTeam create(@RequestBody PostMatchTeam postMatchTeam, @PathVariable String nameTeamFootBall) {
         return postMatchTeamService.createPostMatchTeam(postMatchTeam, nameTeamFootBall);

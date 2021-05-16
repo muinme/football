@@ -39,6 +39,9 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @Autowired
+    private CookieUtil cookieUtil;
+
+    @Autowired
     private UserServiceImpl jwtUserDetailsService;
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
@@ -57,7 +60,7 @@ public class UserController {
     @RequestMapping(value = {"/logout"}, method = RequestMethod.POST)
 
     public ResponseEntity<?> deleteAuthenticationToken(HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) throws Exception {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
@@ -119,7 +122,7 @@ public class UserController {
     }
     @RequestMapping(value = {"/userByUsername"}, method = RequestMethod.GET)
     public ResponseEntity<User> getUsername(HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
@@ -138,7 +141,7 @@ public class UserController {
     }
     @RequestMapping(value = {"/userUsernameRequestMatch"}, method = RequestMethod.GET)
     public ResponseEntity<User> getUsernameRequestMatch(HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
@@ -173,7 +176,7 @@ public class UserController {
 
     @RequestMapping(value = {"/user/updatePassWordByUsername"}, method = RequestMethod.POST)
     public ResponseEntity<User> updatePassWordByUsername(@RequestBody User user, HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         System.out.println(jwt);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");

@@ -1,11 +1,15 @@
 package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.JwtUtil;
+import com.example.football.models.OwnerPitch;
 import com.example.football.models.Pitch;
+import com.example.football.repositories.OwnerPitchRepository;
 import com.example.football.repositories.PitchRepository;
+import com.example.football.repositories.UserRepository;
 import com.example.football.services.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import java.util.Date;
 import java.util.List;
@@ -17,15 +21,29 @@ public class PitchServiceImpl implements PitchService {
     private PitchRepository pitchRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private OwnerPitchRepository ownerPitchRepository;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private AuthenticationServiceImpl authenticationService;
 
     @Override
-    public Pitch createPitch(Pitch pitch) {
+    public Pitch createPitch(Pitch pitch, String username) {
         pitch.setCreated(new Date());
-        return pitchRepository.save(pitch);
+        pitchRepository.save(pitch);
+        Integer user_id = userRepository.getIdByUserName(username);
+        Integer id = pitchRepository.findIdMax();
+        OwnerPitch ownerPitch = new OwnerPitch();
+        ownerPitch.setPitch_id(id);
+        ownerPitch.setUser_id(user_id);
+        ownerPitch.setCreated(new Date());
+        ownerPitchRepository.save(ownerPitch);
+        return pitch;
     }
 
 

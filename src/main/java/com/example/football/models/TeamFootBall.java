@@ -20,6 +20,7 @@ public class TeamFootBall {
     private String actiontime;
     private String level;
     private String introduce;
-    private java.util.Date created;
     private String address;
+    private java.util.Date created;
+
 }

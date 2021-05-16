@@ -1,6 +1,8 @@
 package com.example.football.api.controllers;
 
+import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
+import com.example.football.models.Pitch;
 import com.example.football.models.TeamFootBall;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -17,6 +21,9 @@ import java.util.NoSuchElementException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/football")
 public class TeamFootBallController {
+
+    private static final String jwtTokenCookieName = "JWT-TOKEN";
+
     @Autowired
     private TeamFootBallService teamFootBallService;
 
@@ -25,6 +32,9 @@ public class TeamFootBallController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private  CookieUtil cookieUtil;
 
     @Autowired
     private UserServiceImpl jwtUserDetailsService;
@@ -43,9 +53,35 @@ public class TeamFootBallController {
         }
     }
 
+    @RequestMapping(value = {"/teamFootBall/Username"}, method = RequestMethod.GET)
+    public List<TeamFootBall> getPitch(HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return teamFootBallService.getTeamByUsername(username);
+    }
+
     @PostMapping("/teamFootBall/create")
-    public TeamFootBall create(@RequestBody TeamFootBall teamFootBall) {
-        return teamFootBallService.createTeamFootBall(teamFootBall);
+    public TeamFootBall create(@RequestBody TeamFootBall teamFootBall, HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        System.out.println(teamFootBall);
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return teamFootBallService.createTeamFootBall(teamFootBall, username);
     }
 
     @PostMapping("/teamFootBall/update/{id}")

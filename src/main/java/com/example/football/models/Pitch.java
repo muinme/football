@@ -18,5 +18,8 @@ public class Pitch {
     private String googlemap;
     private String image;
     private java.util.Date created;
+    private String phone;
+    private String email;
+    private String facebook;
 }
 

@@ -24,6 +24,10 @@ public class RequestPitchController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private CookieUtil cookieUtil;
+
     @RequestMapping(value = {"/requestPitch/create/{pitch_id}/{pitch_detail_id}"}, method = RequestMethod.POST)
     public RequestPitch create(@PathVariable Integer pitch_id, @PathVariable Integer pitch_detail_id, HttpServletRequest httpServletRequest) {
 //        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
@@ -41,7 +45,7 @@ public class RequestPitchController {
 
     @RequestMapping(value = {"/requestPitch/Username"}, method = RequestMethod.GET)
     public List<RequestPitch> getRequestPitch(HttpServletRequest httpServletRequest) {
-        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;

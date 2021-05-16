@@ -13,5 +13,6 @@ public class Caption {
     private Integer id;
     private Integer user_id;
     private Integer football_id;
+    private java.util.Date created;
 
 }

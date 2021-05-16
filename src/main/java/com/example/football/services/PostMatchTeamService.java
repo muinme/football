@@ -14,4 +14,6 @@ public interface PostMatchTeamService {
     void deletePostMatchTeam(Integer id);
 
     List<PostMatchTeam> listAllPostMatchTeam();
+
+    List<PostMatchTeam> listFindByUsername(String username);
 }

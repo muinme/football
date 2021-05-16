@@ -2,6 +2,7 @@ package com.example.football.infrastructure.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,9 @@ public class JwtUtil {
 
     @Value("${app.jwtExpirationInMs}")
     private long JWT_EXPIRATION;
+
+    @Autowired
+    private CookieUtil cookieUtil;
 
     public String getUsernameFromToken(String token){
         final Claims claims = getAllClaimsFromToken(token);
@@ -59,7 +63,7 @@ public class JwtUtil {
         return token;
     }
     public String parseToken(HttpServletRequest httpServletRequest){
-        String token = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        String token = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(token == null) {
             return null;
         }

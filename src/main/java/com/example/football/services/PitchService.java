@@ -4,7 +4,7 @@ import com.example.football.models.Pitch;
 import java.util.List;
 
 public interface PitchService {
-        Pitch createPitch(Pitch pitch);
+        Pitch createPitch(Pitch pitch, String username);
 
         Pitch getByIdPitch(Integer id);
 

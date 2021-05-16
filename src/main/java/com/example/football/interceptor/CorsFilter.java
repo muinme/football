@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class CorsFilter extends OncePerRequestFilter {
+    @Value("${app.hostWeb}")
+    private String hostWeb;
 
     private static final Logger LOG = LoggerFactory.getLogger(CorsFilter.class.getSimpleName());
     @Override
@@ -23,7 +26,7 @@ public class CorsFilter extends OncePerRequestFilter {
                                     final FilterChain filterChain) throws ServletException, IOException {
             LOG.info("is called");
 
-        response.addHeader("Access-Control-Allow-Origin", "http://traibonglan.com");
+        response.addHeader("Access-Control-Allow-Origin", hostWeb);
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, HEAD");
         response.addHeader("Access-Control-Allow-Headers",
                 "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");

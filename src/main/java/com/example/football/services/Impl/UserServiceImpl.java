@@ -7,6 +7,7 @@ import com.example.football.repositories.DetailPitchRepository;
 import com.example.football.repositories.UserRepository;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,11 +25,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private static final String jwtTokenCookieName = "JWT-TOKEN";
 
+    @Value("${app.host}")
+    private String host;
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private DetailPitchRepository detailPitchRepository;
+
+    @Autowired
+    private CookieUtil cookieUtil;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -60,15 +67,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse) {
         final String token = jwtUtil.generateToken(userDetails);
-        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "traibonglan.com");
+        cookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, host);
         return token;
     }
 
     @Override
     public String logoutUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         jwtUtil.invalidateRelatedTokens(httpServletRequest);
-        CookieUtil.getValue(httpServletRequest, "JWT-TOKEN");
-        CookieUtil.clear(httpServletResponse, jwtTokenCookieName);
+        cookieUtil.getValue(httpServletRequest, "JWT-TOKEN");
+        cookieUtil.clear(httpServletResponse, jwtTokenCookieName);
         return "logout....";
     }
 
