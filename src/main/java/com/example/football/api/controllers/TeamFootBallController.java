@@ -54,7 +54,7 @@ public class TeamFootBallController {
     }
 
     @RequestMapping(value = {"/teamFootBall/Username"}, method = RequestMethod.GET)
-    public List<TeamFootBall> getPitch(HttpServletRequest httpServletRequest) {
+    public List<TeamFootBall> getTeam(HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
