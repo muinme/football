@@ -49,6 +49,12 @@ public class DetailPitchController {
             return new ResponseEntity<DetailPitch>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(value = {"/detailPitch/getStatusHire/{pitch_id}/{number_pitch_id}"}, method = RequestMethod.GET)
+    public List<String> getDetailPitch(@PathVariable Integer pitch_id, @PathVariable Integer number_pitch_id) {
+      return detailPitchService.getListStatusHire(pitch_id, number_pitch_id);
+    }
+
     @PostMapping("/detail_pitch/updateStatus/{pitch_id}/{timeslot_id}/{day_id}/{number_pitch_id}/{status_hire}")
     public ResponseEntity<?> updateDetailPitchStatusOfTime(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id, @PathVariable Integer day_id, @PathVariable Integer number_pitch_id ,@PathVariable String status_hire) {
         try {

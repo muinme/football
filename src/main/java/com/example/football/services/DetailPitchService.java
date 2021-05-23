@@ -7,9 +7,12 @@ import java.util.List;
 
 public interface DetailPitchService {
     DetailPitch createDetailPitch(DetailPitch detailPitch);
+
     DetailPitch getByIdDetailPitch(Integer id);
 
     List<DetailPitch> getListDetailPitch(Integer pitch_id, Integer timeslot_id, Integer day_id);
+
+    List<String> getListStatusHire(Integer pitch_id, Integer number_pitch_id);
 
     void updateDetailPitchOfTime(Integer pitch_id, Integer timeslot_id, Integer day_id, Integer number_pitch_id, String status_hire);
 

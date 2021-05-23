@@ -44,6 +44,11 @@ public class DetailPitchServiceImpl implements DetailPitchService{
     }
 
     @Override
+    public List<String> getListStatusHire(Integer pitch_id, Integer number_pitch_id) {
+        return detailPitchRepository.getListStatusHire(pitch_id, number_pitch_id);
+    }
+
+    @Override
     public void updateDetailPitchOfTime(Integer pitch_id, Integer timeslot_id, Integer day_id, Integer number_pitch_id,String status_hire) {
         DetailPitch exsitDetailPitch = detailPitchRepository.getDetailPitch(timeslot_id, pitch_id, day_id, number_pitch_id);
         exsitDetailPitch.setStatus_hire(status_hire);
