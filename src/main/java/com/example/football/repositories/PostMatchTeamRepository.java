@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface PostMatchTeamRepository extends JpaRepository<PostMatchTeam, Integer> {
@@ -20,4 +21,12 @@ public interface PostMatchTeamRepository extends JpaRepository<PostMatchTeam, In
             "INNER JOIN users u ON u.id = c.user_id \n" +
             "WHERE u.username =:username", nativeQuery = true)
     List<PostMatchTeam> findListByUsername(@Param("username") String username);
+
+    @Query(value = "SELECT COUNT(*) FROM wait_match_team wmt\n" +
+            "WHERE wmt.football_id =:football_id  AND wmt.status=\"1\"", nativeQuery = true)
+    Integer findSlWaitPost(@Param("football_id") Integer id);
+
+    @Query(value = "SELECT COUNT(*) FROM wait_match_team wmt\n" +
+            "WHERE wmt.football_id =:football_id  AND wmt.status=\"0\"", nativeQuery = true)
+    Integer findSlWaitPostDel(@Param("football_id") Integer id);
 }

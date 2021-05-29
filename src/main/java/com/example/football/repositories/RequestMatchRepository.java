@@ -16,5 +16,12 @@ public interface RequestMatchRepository extends JpaRepository<RequestMatch, Inte
             "            WHERE u.username =:username && rm.status = \"0\"", nativeQuery = true)
     List<RequestMatch> findByUsername(@Param("username") String username);
 
+    @Query(value="SELECT COUNT(*) FROM request_match rm\n" +
+            "WHERE user_id =:user_id AND status = \"0\"", nativeQuery = true)
+    Integer findSlWait(@Param("user_id") Integer id);
 
+    @Query(value = "SELECT COUNT(*) FROM request_match rm \n" +
+            "INNER JOIN wait_match_team wmt ON wmt.id = rm.wait_match_team_id \n" +
+            "WHERE wmt.football_id =:football_id AND rm.status=\"0\"", nativeQuery = true)
+    Integer findSlWaitTeam(@Param("football_id") Integer id);
 }

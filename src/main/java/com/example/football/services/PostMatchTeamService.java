@@ -16,4 +16,8 @@ public interface PostMatchTeamService {
     List<PostMatchTeam> listAllPostMatchTeam();
 
     List<PostMatchTeam> listFindByUsername(String username);
+
+    Integer getSlWaitPost(Integer football_id);
+
+    Integer getSlWaitPostDel(Integer football_id);
 }

@@ -55,4 +55,16 @@ public class RequestMatchServiceImpl implements RequestMatchService {
     public List<RequestMatch> listAllRequestMatch() {
         return requestMatchRepository.findAll();
     }
+
+    @Override
+    public Integer getSlWait(Integer user_id) {
+        return requestMatchRepository.findSlWait(user_id);
+    }
+
+    @Override
+    public Integer getSlWaitTeam(Integer football_id) {
+        return requestMatchRepository.findSlWaitTeam(football_id);
+    }
+
+
 }

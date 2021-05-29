@@ -58,4 +58,14 @@ public class RequestPitchServiceImpl implements RequestPitchService {
         return requestPitchRepository.findAll();
     }
 
+    @Override
+    public Integer getSlWait(Integer user_id) {
+        return requestPitchRepository.findSlWait(user_id);
+    }
+
+    @Override
+    public Integer getSlWaitPitch(Integer pitch_id) {
+        return requestPitchRepository.findSlWaitPitch(pitch_id);
+    }
+
 }

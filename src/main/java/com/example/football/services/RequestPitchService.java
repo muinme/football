@@ -15,4 +15,8 @@ public interface RequestPitchService {
     void saveRequestPitch(RequestPitch requestPitch);
 
     List<RequestPitch> listAllRequestPitch();
+
+    Integer getSlWait(Integer user_id);
+
+    Integer getSlWaitPitch(Integer pitch_id);
 }

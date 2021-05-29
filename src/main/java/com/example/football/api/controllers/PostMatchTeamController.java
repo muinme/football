@@ -87,4 +87,13 @@ public class PostMatchTeamController {
 
         }
     }
+    @RequestMapping(value = {"/postMatchTeam/getSlWaitPost/{football_id}"}, method = RequestMethod.GET)
+    public Integer getSlWaitPost(@PathVariable Integer football_id) {
+        return postMatchTeamService.getSlWaitPost(football_id);
+    }
+
+    @RequestMapping(value = {"/postMatchTeam/getSlWaitPostDel/{football_id}"}, method = RequestMethod.GET)
+    public Integer getSlWaitPostDel(@PathVariable Integer football_id) {
+        return postMatchTeamService.getSlWaitPostDel(football_id);
+    }
 }

@@ -33,4 +33,24 @@ public class HistoryRentalController {
     public ResponseEntity<List<PieInfo>> listPieInfoHistoryRental() {
         return new ResponseEntity<List<PieInfo>>(this.historyRentalService.pieInfoList(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = {"/historyRental/getTcOrder/{user_id}"}, method = RequestMethod.GET)
+    public Integer getTcOrder(@PathVariable Integer user_id) {
+        return historyRentalService.findTcOrder(user_id);
+    }
+
+    @RequestMapping(value = {"/historyRental/getTbOrder/{user_id}"}, method = RequestMethod.GET)
+    public Integer getTbOrder(@PathVariable Integer user_id) {
+        return historyRentalService.findTbOrder(user_id);
+    }
+
+    @RequestMapping(value = {"/historyRental/getTcOrderPitch/{pitch_id}"}, method = RequestMethod.GET)
+    public Integer getTcOrderPitch(@PathVariable Integer pitch_id) {
+        return historyRentalService.findTcOrderPitch(pitch_id);
+    }
+
+    @RequestMapping(value = {"/historyRental/getTbOrderPitch/{pitch_id}"}, method = RequestMethod.GET)
+    public Integer getTbOrderPitch(@PathVariable Integer pitch_id) {
+        return historyRentalService.findTbOrderPitch(pitch_id);
+    }
 }

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM users u \n" +
             "WHERE u.username = :username", nativeQuery = true)
@@ -30,4 +32,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN wait_match_team wm ON wm.football_id = t.id \n" +
             "WHERE wm.id =:id", nativeQuery = true)
     User findByPostId(@Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM users u \n" +
+            "WHERE u.group_id = 2;", nativeQuery = true)
+    List<User> findAllUserMember();
 }

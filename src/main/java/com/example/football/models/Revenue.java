@@ -11,5 +11,8 @@ public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer pitch_id;
     private double money_revenue;
+    private java.util.Date created;
+
 }

@@ -36,7 +36,7 @@ public class PermissionController {
         // TODO
         // Neu dung thi tiep tuc
         String username = jwtUtil.getUsernameFromToken(jwt);
-        System.out.println("username in cookie = " + username);
+        System.out.println("username in cookie permission = " + username);
         return permissionService.getPermissionByUsername(username);
     }
 }

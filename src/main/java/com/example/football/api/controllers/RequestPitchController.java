@@ -46,7 +46,7 @@ public class RequestPitchController {
     @RequestMapping(value = {"/requestPitch/Username"}, method = RequestMethod.GET)
     public List<RequestPitch> getRequestPitch(HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
-        if(null == jwt) {
+        if (null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
             // TODO return;
         }
@@ -56,5 +56,15 @@ public class RequestPitchController {
         String username = jwtUtil.getUsernameFromToken(jwt);
         System.out.println("username in cookie = " + username);
         return requestPitchService.getRequestPitchByUsername(username);
+    }
+
+    @RequestMapping(value = {"/requestPitch/getSlWait/{user_id}"}, method = RequestMethod.GET)
+    public Integer getSlWait(@PathVariable Integer user_id) {
+        return requestPitchService.getSlWait(user_id);
+    }
+
+    @RequestMapping(value = {"/requestPitch/getSlWaitPitch/{pitch_id}"}, method = RequestMethod.GET)
+    public Integer getSlWaitPitch(@PathVariable Integer pitch_id) {
+        return requestPitchService.getSlWaitPitch(pitch_id);
     }
 }

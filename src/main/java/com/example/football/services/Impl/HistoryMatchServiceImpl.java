@@ -1,17 +1,18 @@
 package com.example.football.services.Impl;
 
-import com.example.football.models.*;
+import com.example.football.models.HistoryMatch;
+import com.example.football.models.PieInfo;
+import com.example.football.models.PostMatchTeam;
+import com.example.football.models.RequestMatch;
 import com.example.football.repositories.HistoryMatchRepository;
 import com.example.football.repositories.PostMatchTeamRepository;
 import com.example.football.repositories.RequestMatchRepository;
 import com.example.football.services.HistoryMatchService;
-import com.example.football.services.RequestMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -81,7 +82,6 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
         List<Object> resultList = entityManager.createNativeQuery("SELECT COUNT(*) value , status x FROM history_match hm \n" +
                 "GROUP BY status").getResultList();
         List<PieInfo> data = new ArrayList<PieInfo>();
-
         Iterator it = resultList.iterator();
         while (it.hasNext()) {
             Object[] row = (Object[]) it.next();
@@ -91,5 +91,25 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
             data.add(summary);
         }
         return data;
+    }
+
+    @Override
+    public Integer findTcMatch(Integer user_id) {
+        return historyMatchRepository.findTcMatch(user_id);
+    }
+
+    @Override
+    public Integer findTbMatch(Integer user_id) {
+        return historyMatchRepository.findTbMatch(user_id);
+    }
+
+    @Override
+    public Integer findTcOrderTeam(Integer football_id) {
+        return historyMatchRepository.findTcOrderMatch(football_id);
+    }
+
+    @Override
+    public Integer findTbOrderTeam(Integer football_id) {
+        return historyMatchRepository.findTbOrderMatch(football_id);
     }
 }

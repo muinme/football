@@ -79,4 +79,24 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
         }
         return data;
     }
+
+    @Override
+    public Integer findTcOrder(Integer user_id) {
+        return historyRentalRepository.findTcOrder(user_id);
+    }
+
+    @Override
+    public Integer findTbOrder(Integer user_id) {
+        return historyRentalRepository.findTbOrder(user_id);
+    }
+
+    @Override
+    public Integer findTcOrderPitch(Integer pitch_id) {
+        return historyRentalRepository.findTcOrderPitch(pitch_id);
+    }
+
+    @Override
+    public Integer findTbOrderPitch(Integer pitch_id) {
+        return historyRentalRepository.findTbOrderPitch(pitch_id);
+    }
 }

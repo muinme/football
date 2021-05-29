@@ -32,6 +32,12 @@ public class RequestMatchController {
         return requestMatchService.listAllRequestMatch();
     }
 
+
+    @RequestMapping(value = {"/requestMatch/getSlWait/{user_id}"}, method = RequestMethod.GET)
+    public Integer getSlWait(@PathVariable Integer user_id) {
+        return requestMatchService.getSlWait(user_id);
+    }
+
     @RequestMapping(value = {"/requestMatch/create/{id}"}, method = RequestMethod.POST)
     public RequestMatch create(@PathVariable Integer id, HttpServletRequest httpServletRequest) {
         System.out.println(id);
@@ -61,5 +67,9 @@ public class RequestMatchController {
         String username = jwtUtil.getUsernameFromToken(jwt);
         System.out.println("username in cookie = " + username);
         return requestMatchService.getRequestMatchByUsername(username);
+    }
+    @RequestMapping(value = {"/requestMatch/getSlWaitTeam/{football_id}"}, method = RequestMethod.GET)
+    public Integer getSlWaitPitch(@PathVariable Integer football_id) {
+        return requestMatchService.getSlWaitTeam(football_id);
     }
 }

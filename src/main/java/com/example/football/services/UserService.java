@@ -30,6 +30,10 @@ public interface UserService {
 
     void deleteUser(Integer id);
 
-    List<User> listAllUser();
+    List<User> listAllUserMember();
+
+    User updateStatusUser1(Integer id);
+
+    User updateStatusUser2(Integer id);
 
 }

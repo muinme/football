@@ -37,4 +37,24 @@ public class HistoryMatchController {
     public HistoryMatch createHistoryMatch2(@PathVariable Integer request_match_id) {
         return historyMatchService.saveHistoryMatch2(request_match_id);
     }
+
+    @RequestMapping(value = {"/historyMatch/getTcMatch/{user_id}"}, method = RequestMethod.GET)
+    public Integer getTcMatch(@PathVariable Integer user_id) {
+        return historyMatchService.findTcMatch(user_id);
+    }
+
+    @RequestMapping(value = {"/historyMatch/getTbMatch/{user_id}"}, method = RequestMethod.GET)
+    public Integer getTbMatch(@PathVariable Integer user_id) {
+        return historyMatchService.findTbMatch(user_id);
+    }
+
+    @RequestMapping(value = {"/historyMatch/getTcOrderMatch/{football_id}"}, method = RequestMethod.GET)
+    public Integer getTcOrderMatch(@PathVariable Integer football_id) {
+        return historyMatchService.findTcOrderTeam(football_id);
+    }
+
+    @RequestMapping(value = {"/historyMatch/getTbOrderMatch/{football_id}"}, method = RequestMethod.GET)
+    public Integer getTbOrderMatch(@PathVariable Integer football_id) {
+        return historyMatchService.findTcOrderTeam(football_id);
+    }
 }

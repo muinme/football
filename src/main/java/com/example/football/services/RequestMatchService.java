@@ -10,6 +10,12 @@ public interface RequestMatchService {
     RequestMatch getByIdRequestMatch(Integer id);
 
     void saveRequestMatch(RequestMatch requestMatch);
+
     List<RequestMatch> getRequestMatchByUsername(String username);
+
     List<RequestMatch> listAllRequestMatch();
+
+    Integer getSlWait(Integer user_id);
+
+    Integer getSlWaitTeam(Integer football_id);
 }

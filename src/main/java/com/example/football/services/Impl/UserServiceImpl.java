@@ -112,9 +112,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> listAllUser() {
+    public List<User> listAllUserMember() {
 
-        return userRepository.findAll();
+        return userRepository.findAllUserMember();
     }
 
     @Override
@@ -126,5 +126,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                 new ArrayList<>());
+    }
+
+    @Override
+    public User updateStatusUser1(Integer id) {
+        User  existingUser = userRepository.findById(id).get();
+        existingUser.setStatus("Active");
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public User updateStatusUser2(Integer id) {
+        User  existingUser = userRepository.findById(id).get();
+        existingUser.setStatus("Deactive");
+        return userRepository.save(existingUser);
     }
 }

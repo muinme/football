@@ -22,6 +22,7 @@ public class User {
     @Transient
     MultipartFile file;
     private java.util.Date created;
+    private String status;
 
 
 

@@ -78,10 +78,10 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(userService.logoutUser(httpServletRequest, httpServletResponse)));
     }
 
-    @RequestMapping(value = {"/user/getAll"}, method = RequestMethod.GET)
-    public ResponseEntity<?> list() throws Exception {
+    @RequestMapping(value = {"/user/getAllUserMember"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getAllUserMember() throws Exception {
 
-        return new ResponseEntity<>(userService.listAllUser(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.listAllUserMember(), HttpStatus.OK);
     }
 
     @RequestMapping(value = {"/userById/{id}"}, method = RequestMethod.GET)
@@ -198,8 +198,7 @@ public class UserController {
     @RequestMapping(value = {"/user/updateProfileByUsername/{username}"}, method = RequestMethod.POST)
     public ResponseEntity<?> updateProfileByUsername(@RequestBody User user, @PathVariable String username) {
             try {
-                userService.updateProfileUser(user, username);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(userService.updateProfileUser(user, username),HttpStatus.OK);
             } catch (Exception internalError) {
                 internalError.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -226,6 +225,16 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @RequestMapping(value = {"/user/updateStatusById1/{id}"}, method = RequestMethod.POST)
+    public User updateStatusUser1(@PathVariable Integer id) {
+        System.out.println("lll");
+        return userService.updateStatusUser1(id);
+    }
+    @RequestMapping(value = {"/user/updateStatusById2/{id}"}, method = RequestMethod.POST)
+    public User updateStatusUser2(@PathVariable Integer id) {
+        System.out.println("lll2");
+        return userService.updateStatusUser2(id);
     }
 
 }

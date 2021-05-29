@@ -58,5 +58,15 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     public List<PostMatchTeam> listFindByUsername(String username) {
         return postMatchTeamRepository.findListByUsername(username);
     }
+
+    @Override
+    public Integer getSlWaitPost(Integer football_id) {
+        return postMatchTeamRepository.findSlWaitPost(football_id);
+    }
+
+    @Override
+    public Integer getSlWaitPostDel(Integer football_id) {
+        return postMatchTeamRepository.findSlWaitPostDel(football_id);
+    }
 }
 
