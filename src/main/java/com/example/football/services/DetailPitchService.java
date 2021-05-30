@@ -22,5 +22,7 @@ public interface DetailPitchService {
 
     List<DetailPitch> listAllDetailPitch();
 
+    DetailPitch getInfo(Integer request_pitch_id);
 
+    Integer getSLPitch(Integer pitch_id);
 }

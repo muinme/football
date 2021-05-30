@@ -21,4 +21,8 @@ public interface TeamFootBallRepository extends JpaRepository<TeamFootBall, Inte
 
     @Query(value = "SELECT MAX(t.id) FROM teamfootballs t ",nativeQuery = true)
     Integer findIdMax();
+
+    @Query(value = "SELECT t.* FROM  teamfootballs t \n" +
+            "WHERE t.id =:football_id", nativeQuery = true)
+    TeamFootBall findNameTeam(@Param("football_id") Integer football_id);
 }

@@ -44,6 +44,16 @@ public class PitchController {
             return new ResponseEntity<Pitch>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/pitch/getNamePitch/{request_pitch_id}")
+    public ResponseEntity<?> getNamePitch(@PathVariable Integer request_pitch_id) {
+        try {
+            return new ResponseEntity<Pitch>(pitchService.findNamePitch(request_pitch_id), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Pitch>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(value = {"/pitch/Username"}, method = RequestMethod.GET)
     public List<Pitch> getPitch(HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);

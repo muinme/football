@@ -2,6 +2,7 @@ package com.example.football.services;
 
 import com.example.football.models.DetailPitch;
 import com.example.football.models.HistoryMatch;
+import com.example.football.models.HistoryRental;
 import com.example.football.models.PieInfo;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,4 +29,6 @@ public interface HistoryMatchService {
     Integer findTcOrderTeam(Integer football_id);
 
     Integer findTbOrderTeam(Integer football_id);
+
+    List<HistoryMatch> listHistoryMatchByUserName(String username);
 }

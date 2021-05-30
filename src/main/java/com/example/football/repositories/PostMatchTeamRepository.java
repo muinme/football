@@ -1,5 +1,6 @@
 package com.example.football.repositories;
 
+import com.example.football.models.DetailPitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,9 @@ public interface PostMatchTeamRepository extends JpaRepository<PostMatchTeam, In
     @Query(value = "SELECT COUNT(*) FROM wait_match_team wmt\n" +
             "WHERE wmt.football_id =:football_id  AND wmt.status=\"0\"", nativeQuery = true)
     Integer findSlWaitPostDel(@Param("football_id") Integer id);
+
+    @Query(value = "SELECT * FROM wait_match_team wmt \n" +
+            "INNER JOIN request_match rm ON rm.wait_match_team_id = wmt.id \n" +
+            "WHERE rm.id =:request_match_id", nativeQuery = true)
+    PostMatchTeam getInFo(@Param("request_match_id") Integer request_match_id);
 }

@@ -1,7 +1,6 @@
 package com.example.football.repositories;
 
 import com.example.football.models.Pitch;
-import com.example.football.models.RequestMatch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +16,10 @@ public interface PitchRepository extends JpaRepository<Pitch, Integer> {
 
     @Query(value = "SELECT MAX(p.id) FROM pitchs p",nativeQuery = true)
     Integer findIdMax();
+
+    @Query(value = "SELECT p.* FROM pitchs p \n" +
+            "INNER JOIN request_pitch rp ON p.id = rp.pitch_id\n" +
+            "WHERE rp.id =:request_pitch_id", nativeQuery = true)
+    Pitch findNamePitch(@Param("request_pitch_id") Integer request_pitch_id);
+
 }

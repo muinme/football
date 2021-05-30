@@ -16,6 +16,8 @@ public interface TeamFootBallService {
 
     List<TeamFootBall> listAllTeamFootBall();
 
+    TeamFootBall findNameTeam(Integer football_id);
+
     List<TeamFootBall> getTeamByUsername(String username);
 
 

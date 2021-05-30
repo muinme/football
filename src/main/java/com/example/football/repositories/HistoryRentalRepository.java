@@ -34,6 +34,10 @@ public interface HistoryRentalRepository extends JpaRepository<HistoryRental, In
             "WHERE rp.pitch_id =:pitch_id AND hr.status = \"0\"", nativeQuery = true)
     Integer findTbOrderPitch(@Param("pitch_id") Integer id);
 
-
+    @Query(value = "SELECT hr.* FROM history_rental hr \n" +
+            "INNER JOIN request_pitch rp ON rp.id = hr.request_pitch_id \n" +
+            "INNER JOIN users u ON u.id = rp.user_id \n" +
+            "WHERE username =:username", nativeQuery = true)
+    List<HistoryRental> findByUserName(@Param("username") String username);
 
 }

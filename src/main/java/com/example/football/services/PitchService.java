@@ -15,4 +15,6 @@ public interface PitchService {
         List<Pitch> listAllPitch();
 
         List<Pitch> getPitchByUsername(String username);
+
+        Pitch findNamePitch(Integer request_pitch_id);
 }

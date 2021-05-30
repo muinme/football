@@ -101,6 +101,15 @@ public class TeamFootBallController {
         }
     }
 
+    @GetMapping("teamFootBall/getNameTeam/{football_id}")
+    public ResponseEntity<?> getNamePitch(@PathVariable Integer football_id) {
+        try {
+            return new ResponseEntity<TeamFootBall>(teamFootBallService.findNameTeam(football_id), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<TeamFootBall>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/teamFootBall/delete/{id}")
     public void delete(@PathVariable Integer id) {
         try {

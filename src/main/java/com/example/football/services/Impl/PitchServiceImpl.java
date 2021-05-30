@@ -71,4 +71,9 @@ public class PitchServiceImpl implements PitchService {
     public List<Pitch> getPitchByUsername(String username) {
         return pitchRepository.findByUsername(username);
     }
+
+    @Override
+    public Pitch findNamePitch(Integer request_pitch_id) {
+        return pitchRepository.findNamePitch(request_pitch_id);
+    }
 }

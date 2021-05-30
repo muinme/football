@@ -1,5 +1,7 @@
 package com.example.football.api.controllers;
 
+import com.example.football.infrastructure.security.CookieUtil;
+import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.HistoryRental;
 import com.example.football.models.PieInfo;
 import com.example.football.services.HistoryMatchService;
@@ -12,11 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/football")
 public class HistoryRentalController {
+
+    private static final String jwtTokenCookieName = "JWT-TOKEN";
+
+    @Autowired
+    private CookieUtil cookieUtil;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Autowired
     private HistoryRentalService historyRentalService;
 
@@ -52,5 +64,25 @@ public class HistoryRentalController {
     @RequestMapping(value = {"/historyRental/getTbOrderPitch/{pitch_id}"}, method = RequestMethod.GET)
     public Integer getTbOrderPitch(@PathVariable Integer pitch_id) {
         return historyRentalService.findTbOrderPitch(pitch_id);
+    }
+
+    @RequestMapping(value = {"/historyRental/getListByUserName"}, method = RequestMethod.GET)
+    public ResponseEntity<?> getListByUserName(HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        System.out.println(jwt);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        try {
+            return new ResponseEntity<>(historyRentalService.listHistoryRentalByUserName(username), HttpStatus.OK);
+        }catch (Exception exception)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

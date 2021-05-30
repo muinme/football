@@ -1,9 +1,7 @@
 package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.Pitch;
 import com.example.football.models.PostMatchTeam;
-import com.example.football.repositories.PitchRepository;
 import com.example.football.repositories.PostMatchTeamRepository;
 import com.example.football.repositories.TeamFootBallRepository;
 import com.example.football.services.PostMatchTeamService;
@@ -67,6 +65,11 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     @Override
     public Integer getSlWaitPostDel(Integer football_id) {
         return postMatchTeamRepository.findSlWaitPostDel(football_id);
+    }
+
+    @Override
+    public PostMatchTeam getInfo(Integer request_match_id) {
+        return postMatchTeamRepository.getInFo(request_match_id);
     }
 }
 

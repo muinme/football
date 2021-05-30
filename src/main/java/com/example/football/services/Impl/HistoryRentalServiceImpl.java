@@ -99,4 +99,9 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
     public Integer findTbOrderPitch(Integer pitch_id) {
         return historyRentalRepository.findTbOrderPitch(pitch_id);
     }
+
+    @Override
+    public List<HistoryRental> listHistoryRentalByUserName(String username) {
+        return historyRentalRepository.findByUserName(username);
+    }
 }

@@ -21,4 +21,6 @@ public interface HistoryRentalService {
     Integer findTcOrderPitch(Integer pitch_id);
 
     Integer findTbOrderPitch(Integer pitch_id);
+
+    List<HistoryRental> listHistoryRentalByUserName(String username);
 }

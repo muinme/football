@@ -71,4 +71,14 @@ public class DetailPitchServiceImpl implements DetailPitchService{
     public List<DetailPitch> listAllDetailPitch() {
         return detailPitchRepository.findAll();
     }
+
+    @Override
+    public DetailPitch getInfo(Integer request_pitch_id) {
+        return detailPitchRepository.getInFo(request_pitch_id);
+    }
+
+    @Override
+    public Integer getSLPitch(Integer pitch_id) {
+        return detailPitchRepository.getSLPitch(pitch_id);
+    }
 }

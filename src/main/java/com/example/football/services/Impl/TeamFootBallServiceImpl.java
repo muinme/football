@@ -68,6 +68,11 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
     }
 
     @Override
+    public TeamFootBall findNameTeam(Integer football_id) {
+        return teamFootBallRepository.findNameTeam(football_id);
+    }
+
+    @Override
     public List<TeamFootBall> getTeamByUsername(String username) {
         return teamFootBallRepository.findByUsername(username);
     }

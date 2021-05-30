@@ -2,6 +2,7 @@ package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
+import com.example.football.models.DetailPitch;
 import com.example.football.models.Pitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.services.PostMatchTeamService;
@@ -95,5 +96,14 @@ public class PostMatchTeamController {
     @RequestMapping(value = {"/postMatchTeam/getSlWaitPostDel/{football_id}"}, method = RequestMethod.GET)
     public Integer getSlWaitPostDel(@PathVariable Integer football_id) {
         return postMatchTeamService.getSlWaitPostDel(football_id);
+    }
+
+    @GetMapping("/postMatchTeam/getInfo/{request_match_id}")
+    public ResponseEntity<?> getInfo(@PathVariable Integer request_match_id) {
+        try {
+            return new ResponseEntity<PostMatchTeam>(postMatchTeamService.getInfo(request_match_id), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<PostMatchTeam>(HttpStatus.NOT_FOUND);
+        }
     }
 }

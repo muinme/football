@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface DetailPitchRepository extends JpaRepository<DetailPitch, Integer> {
@@ -24,4 +25,15 @@ public interface DetailPitchRepository extends JpaRepository<DetailPitch, Intege
             "            WHERE i.pitch_id =:pitch_id\n" +
             "            and dp.number_pitch_id=:number_pitch_id", nativeQuery = true)
     List<String> getListStatusHire(@Param("pitch_id") Integer pitch_id, @Param("number_pitch_id") Integer number_pitch_id);
+
+
+    @Query(value = "SELECT dp.* FROM detail_pitchs dp \n" +
+            "INNER JOIN request_pitch rp ON dp.id = rp.pitch_detail_id \n" +
+            "WHERE rp.id =:request_pitch_id", nativeQuery = true)
+    DetailPitch getInFo(@Param("request_pitch_id") Integer request_pitch_id);
+    
+    @Query(value = "SELECT MAX(i.number_pitch) FROM detail_pitchs dp \n" +
+            "INNER JOIN inventory i ON i.number_pitch = dp.number_pitch_id \n" +
+            "WHERE i.pitch_id =:pitch_id" , nativeQuery = true)
+    Integer getSLPitch(@Param("pitch_id") Integer pitch_id);
 }

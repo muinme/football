@@ -141,4 +141,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         existingUser.setStatus("Deactive");
         return userRepository.save(existingUser);
     }
+
+    @Override
+    public User updateLoadAvatar(String url, String username) {
+        User existingUser = userRepository.findByUsername(username);
+        existingUser.setImage(url);
+        return userRepository.save(existingUser);
+    }
 }

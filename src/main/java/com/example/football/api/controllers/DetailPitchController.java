@@ -2,6 +2,7 @@ package com.example.football.api.controllers;
 
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.DetailPitch;
+import com.example.football.models.Pitch;
 import com.example.football.models.PostMatchTeam;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.DetailPitchService;
@@ -9,6 +10,7 @@ import com.example.football.services.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -93,4 +95,17 @@ public class DetailPitchController {
         }
     }
 
+    @GetMapping("/detail_pitch/getInfo/{request_pitch_id}")
+    public ResponseEntity<?> getInfo(@PathVariable Integer request_pitch_id) {
+        try {
+            return new ResponseEntity<DetailPitch>(detailPitchService.getInfo(request_pitch_id), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<DetailPitch>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/detail_pitch/getSLPitch/{pitch_id}")
+    public Integer getSLPitch(@PathVariable Integer pitch_id){
+        return detailPitchService.getSLPitch(pitch_id);
+    }
 }

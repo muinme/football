@@ -20,4 +20,7 @@ public interface PostMatchTeamService {
     Integer getSlWaitPost(Integer football_id);
 
     Integer getSlWaitPostDel(Integer football_id);
+
+    PostMatchTeam getInfo(Integer request_match_id);
+
 }

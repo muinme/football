@@ -195,6 +195,29 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = {"/user/updateLoadAvatarByUsername/{url}"}, method = RequestMethod.POST)
+    public ResponseEntity<User> updateLoadAvatarByUsername(@PathVariable String url, HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        System.out.println(jwt);
+        if (null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        try {
+            userService.updateLoadAvatar(url, username);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception internalError) {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = {"/user/updateProfileByUsername/{username}"}, method = RequestMethod.POST)
     public ResponseEntity<?> updateProfileByUsername(@RequestBody User user, @PathVariable String username) {
             try {
@@ -204,7 +227,6 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
-
 
     @RequestMapping(value = {"/user/delete/{id}"}, method = RequestMethod.POST)
     public ResponseEntity<?> delete(@PathVariable Integer id) {

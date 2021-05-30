@@ -112,4 +112,9 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
     public Integer findTbOrderTeam(Integer football_id) {
         return historyMatchRepository.findTbOrderMatch(football_id);
     }
+
+    @Override
+    public List<HistoryMatch> listHistoryMatchByUserName(String username) {
+        return historyMatchRepository.findByUserName(username);
+    }
 }
