@@ -23,6 +23,7 @@ public class User {
     MultipartFile file;
     private java.util.Date created;
     private String status;
+    private Integer group_id;
 
 
 
