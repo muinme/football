@@ -80,14 +80,17 @@ public class PostMatchTeamController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @RequestMapping(value = {"/postMatchTeam/delete/{id}"}, method = RequestMethod.POST)
-    public void delete(@PathVariable Integer id) {
-        try {
-            postMatchTeamService.deletePostMatchTeam(id);
-        } catch (NoSuchElementException e) {
 
-        }
+    @RequestMapping(value = {"/postMatchTeam/delete/{id}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> deletePost(@PathVariable Integer id){
+            try{
+                return new ResponseEntity<>(postMatchTeamService.deletePostMatchTeam(id),HttpStatus.OK);
+            }
+            catch (NoSuchElementException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
     }
+
     @RequestMapping(value = {"/postMatchTeam/getSlWaitPost/{football_id}"}, method = RequestMethod.GET)
     public Integer getSlWaitPost(@PathVariable Integer football_id) {
         return postMatchTeamService.getSlWaitPost(football_id);

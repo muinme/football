@@ -30,17 +30,17 @@ public class RequestPitchController {
 
     @RequestMapping(value = {"/requestPitch/create/{pitch_id}/{pitch_detail_id}"}, method = RequestMethod.POST)
     public RequestPitch create(@PathVariable Integer pitch_id, @PathVariable Integer pitch_detail_id, HttpServletRequest httpServletRequest) {
-//        String jwt = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
-//        if(null == jwt) {
-//            System.out.println("Chua login | khong the lay token trong cookie");
-//            // TODO return;
-//        }
-//        // kiem tra token duoc luu trong redis xem co hay khong
-//        // TODO
-//        // Neu dung thi tiep tuc
-//        String username = jwtUtil.getUsernameFromToken(jwt);
-//        System.out.println("username in cookie = " + username);
-        return requestPitchService.createRequestPitch(pitch_id, pitch_detail_id, "a");
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return requestPitchService.createRequestPitch(pitch_id, pitch_detail_id, username);
     }
 
     @RequestMapping(value = {"/requestPitch/Username"}, method = RequestMethod.GET)

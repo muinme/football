@@ -53,8 +53,13 @@ public class DetailPitchController {
     }
 
     @RequestMapping(value = {"/detailPitch/getStatusHire/{pitch_id}/{number_pitch_id}"}, method = RequestMethod.GET)
-    public List<String> getDetailPitch(@PathVariable Integer pitch_id, @PathVariable Integer number_pitch_id) {
+    public List<String> getDetailPitchHire(@PathVariable Integer pitch_id, @PathVariable Integer number_pitch_id) {
       return detailPitchService.getListStatusHire(pitch_id, number_pitch_id);
+    }
+
+    @RequestMapping(value = {"/detailPitch/getMoneyPitch/{pitch_id}/{number_pitch_id}"}, method = RequestMethod.GET)
+    public List<String> getDetailMoneyPitch(@PathVariable Integer pitch_id, @PathVariable Integer number_pitch_id) {
+        return detailPitchService.getListMoneyPitch(pitch_id, number_pitch_id);
     }
 
     @PostMapping("/detail_pitch/updateStatus/{pitch_id}/{timeslot_id}/{day_id}/{number_pitch_id}/{status_hire}")
@@ -62,6 +67,17 @@ public class DetailPitchController {
         try {
             detailPitchService.updateDetailPitchOfTime(pitch_id, timeslot_id, day_id, number_pitch_id, status_hire);
             return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception internalError)
+        {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/detail_pitch/updateMoney/{pitch_id}/{timeslot_id}/{day_id}/{number_pitch_id}/{money}")
+    public ResponseEntity<?> updateDetailPitchMoney(@PathVariable Integer pitch_id, @PathVariable Integer timeslot_id, @PathVariable Integer day_id, @PathVariable Integer number_pitch_id ,@PathVariable Integer money) {
+        try {
+            return new ResponseEntity<>( detailPitchService.updateDetailPitchMoney(pitch_id, timeslot_id, day_id, number_pitch_id, money),HttpStatus.OK);
         }catch (Exception internalError)
         {
             internalError.printStackTrace();
@@ -104,8 +120,12 @@ public class DetailPitchController {
         }
     }
 
-    @GetMapping("/detail_pitch/getSLPitch/{pitch_id}")
-    public Integer getSLPitch(@PathVariable Integer pitch_id){
-        return detailPitchService.getSLPitch(pitch_id);
+    @PostMapping("/detail_pitch/create/{pitch_id}")
+    public ResponseEntity<?> createMiniPitch(@PathVariable Integer pitch_id) {
+        try {
+            return new ResponseEntity<>(detailPitchService.createDetailPitch(pitch_id), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

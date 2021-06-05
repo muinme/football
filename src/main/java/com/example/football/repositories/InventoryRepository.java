@@ -14,4 +14,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
             "WHERE i.pitch_id = :pitch_id", nativeQuery = true)
     Integer getMaxPitch(@Param("pitch_id") Integer pitch_id);
 
+    @Query(value = "SELECT COUNT(i.number_pitch) FROM inventory i \n" +
+            "WHERE i.pitch_id =:pitch_id", nativeQuery = true)
+    Integer getSLPitch(@Param("pitch_id") Integer pitch_id);
 }

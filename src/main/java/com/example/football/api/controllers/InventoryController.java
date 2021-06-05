@@ -1,7 +1,6 @@
 package com.example.football.api.controllers;
 
-import com.example.football.models.Price;
-import com.example.football.services.PriceService;
+import com.example.football.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +13,17 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/football")
-public class PriceController {
+public class InventoryController {
 
     @Autowired
-    private PriceService priceService;
+    private InventoryRepository inventoryRepository;
 
-    @GetMapping("/price/{id}")
-    public ResponseEntity<Price> get(@PathVariable Integer id) {
+    @GetMapping("/inventory/getSLPitch/{pitch_id}")
+    public ResponseEntity<Integer> getSLPitch(@PathVariable Integer pitch_id) {
         try {
-            return new ResponseEntity<Price>(priceService.getPriceById(id), HttpStatus.OK);
+            return new ResponseEntity<Integer>(inventoryRepository.getSLPitch(pitch_id), HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<Price>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Integer>(HttpStatus.NOT_FOUND);
         }
     }
 }

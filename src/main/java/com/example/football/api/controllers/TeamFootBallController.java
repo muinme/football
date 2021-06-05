@@ -111,11 +111,13 @@ public class TeamFootBallController {
     }
 
     @PostMapping("/teamFootBall/delete/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         try {
             teamFootBallService.deleteTeamFootBall(id);
-        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>( "Xóa thành công", HttpStatus.OK);
 
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>("Xóa thất bại",HttpStatus.NOT_FOUND);
         }
     }
 }

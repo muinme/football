@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
         message.setText("Dear "+ userPost.getFullname() + "," + "\n" +
                 "\n" +
                 "People: "+ user.getFullname() + " want match your post" + "\n" +
-                "Please visit the website to confirm! Thank you \n" +
+                "Please visit the website http://traibonglan.com/login confirm! Thank you \n" +
                 "\n" +
                 "System sincerely,\n" +
                 "Admin");

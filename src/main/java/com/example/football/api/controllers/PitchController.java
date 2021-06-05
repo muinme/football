@@ -102,11 +102,13 @@ public class PitchController {
     }
 
     @PostMapping("/pitch/delete/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         try {
             pitchService.deletePitch(id);
-        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>( "Xóa thành công", HttpStatus.OK);
 
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<String>("Xóa thất bại",HttpStatus.NOT_FOUND);
         }
     }
 

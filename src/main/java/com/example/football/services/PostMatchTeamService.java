@@ -11,7 +11,7 @@ public interface PostMatchTeamService {
 
     void savePostMatchTeam(PostMatchTeam postMatchTeam);
 
-    void deletePostMatchTeam(Integer id);
+    PostMatchTeam deletePostMatchTeam(Integer id);
 
     List<PostMatchTeam> listAllPostMatchTeam();
 

@@ -43,8 +43,10 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     }
 
     @Override
-    public void deletePostMatchTeam(Integer id) {
-        postMatchTeamRepository.deleteById(id);
+    public PostMatchTeam deletePostMatchTeam(Integer id) {
+        PostMatchTeam postMatchTeam = postMatchTeamRepository.findById(id).get();
+        postMatchTeam.setStatus("0");
+        return postMatchTeamRepository.save(postMatchTeam);
     }
 
     @Override
