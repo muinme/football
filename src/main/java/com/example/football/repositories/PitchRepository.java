@@ -1,6 +1,7 @@
 package com.example.football.repositories;
 
 import com.example.football.models.Pitch;
+import com.example.football.models.TeamFootBall;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +22,9 @@ public interface PitchRepository extends JpaRepository<Pitch, Integer> {
             "INNER JOIN request_pitch rp ON p.id = rp.pitch_id\n" +
             "WHERE rp.id =:request_pitch_id", nativeQuery = true)
     Pitch findNamePitch(@Param("request_pitch_id") Integer request_pitch_id);
+
+    @Query(value = "SELECT * FROM pitchs p \n" +
+            "WHERE p.address LIKE :qh", nativeQuery = true)
+    List<Pitch> findPitchByAddress(@Param("qh") String qh);
 
 }

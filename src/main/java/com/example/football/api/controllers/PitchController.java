@@ -101,6 +101,15 @@ public class PitchController {
         }
     }
 
+        @GetMapping("/pitch/{tt}/{qh}")
+    public ResponseEntity<?> getByAddress(@PathVariable String tt, @PathVariable String qh) {
+        try {
+            return new ResponseEntity<>(pitchService.getPitchByAddress(tt, qh), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/pitch/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         try {

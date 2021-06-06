@@ -53,6 +53,33 @@ public class TeamFootBallController {
         }
     }
 
+    @GetMapping("/teamFootBall/{tt}/{qh}")
+    public ResponseEntity<?> getByAddress(@PathVariable String tt, @PathVariable String qh) {
+        try {
+            return new ResponseEntity<>(teamFootBallService.getTeamByAddress(tt, qh), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/teamFootBall/actionTime")
+    public ResponseEntity<?> getByActionTime() {
+        try {
+            return new ResponseEntity<>(teamFootBallService.findActionTime(), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/teamFootBall/getByActionTimeAndLevel/{actionTime}/{level}")
+    public ResponseEntity<?> getByActionTimeAndLevel(@PathVariable String actionTime, @PathVariable String level) {
+        try {
+            return new ResponseEntity<>(teamFootBallService .getByActionTimeAndLevel(actionTime, level), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(value = {"/teamFootBall/Username"}, method = RequestMethod.GET)
     public List<TeamFootBall> getTeam(HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);

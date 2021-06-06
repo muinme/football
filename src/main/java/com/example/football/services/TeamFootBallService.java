@@ -20,5 +20,10 @@ public interface TeamFootBallService {
 
     List<TeamFootBall> getTeamByUsername(String username);
 
+    List<String> findActionTime();
+
+    List<TeamFootBall> getTeamByAddress(String tt, String qh);
+
+    List<TeamFootBall> getByActionTimeAndLevel(String actionTime, String level);
 
 }

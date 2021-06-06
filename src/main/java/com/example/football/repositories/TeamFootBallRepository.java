@@ -25,4 +25,24 @@ public interface TeamFootBallRepository extends JpaRepository<TeamFootBall, Inte
     @Query(value = "SELECT t.* FROM  teamfootballs t \n" +
             "WHERE t.id =:football_id", nativeQuery = true)
     TeamFootBall findNameTeam(@Param("football_id") Integer football_id);
+
+    @Query(value = "SELECT * FROM teamfootballs t \n" +
+            "WHERE t.address LIKE :qh", nativeQuery = true)
+    List<TeamFootBall> findTeamByAddress(@Param("qh") String qh);
+
+    @Query(value = "SELECT actiontime FROM teamfootballs \n" +
+            "GROUP BY actiontime", nativeQuery = true)
+    List<String> findActionTime();
+
+    @Query(value = "SELECT * FROM teamfootballs t\n" +
+            "WHERE t.level LIKE :level", nativeQuery = true)
+    List<TeamFootBall> findByLevel(@Param("level") String level);
+
+    @Query(value = "SELECT * FROM teamfootballs t\n" +
+            "WHERE t.actiontime =:actiontime", nativeQuery = true)
+    List<TeamFootBall> findByActionTime(@Param("actiontime") String actiontime);
+
+    @Query(value = "SELECT * FROM teamfootballs t\n" +
+            "WHERE t.actiontime =:actiontime AND t.level LIKE :level", nativeQuery = true)
+    List<TeamFootBall> findByActionTimeAndLevel(@Param("actiontime") String actiontime, @Param("level") String level);
 }

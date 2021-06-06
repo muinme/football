@@ -81,6 +81,33 @@ public class PostMatchTeamController {
         }
     }
 
+    @GetMapping("/postMatchTeam/actionTime")
+    public ResponseEntity<?> getByPlayTime() {
+        try {
+            return new ResponseEntity<>(postMatchTeamService.findPlayTime(), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/postMatchTeam/{tt}/{qh}")
+    public ResponseEntity<?> getByAddress(@PathVariable String tt, @PathVariable String qh) {
+        try {
+            return new ResponseEntity<>(postMatchTeamService.getPostByAddress(tt, qh), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/postMatchTeam/getByActionTimeAndLevel/{actionTime}/{level}")
+    public ResponseEntity<?> getByActionTimeAndLevel(@PathVariable String actionTime, @PathVariable String level) {
+        try {
+            return new ResponseEntity<>(postMatchTeamService .getByPlayTimeAndLevelWant(actionTime, level), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(value = {"/postMatchTeam/delete/{id}"}, method = RequestMethod.POST)
     public ResponseEntity<?> deletePost(@PathVariable Integer id){
             try{

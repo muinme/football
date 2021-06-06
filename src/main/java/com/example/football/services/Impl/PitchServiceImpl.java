@@ -73,7 +73,22 @@ public class PitchServiceImpl implements PitchService {
     }
 
     @Override
+    public List<Pitch> getPitchByAddress(String tt, String qh) {
+        tt = convertString(tt);
+        qh = convertString(qh);
+        return pitchRepository.findPitchByAddress(qh);
+    }
+
+    @Override
     public Pitch findNamePitch(Integer request_pitch_id) {
         return pitchRepository.findNamePitch(request_pitch_id);
+    }
+
+    public String convertString(String m)
+    {
+        m = m.trim();
+        String [] tt = m.split(" ");
+        String tmp = "%" + tt[tt.length - 2] +" "+tt[tt.length-1] + "%";
+        return tmp;
     }
 }
