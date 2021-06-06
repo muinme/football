@@ -65,6 +65,33 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     }
 
     @Override
+    public List<String> findPlayTime() {
+        return postMatchTeamRepository.findPlayTime();
+    }
+
+    @Override
+    public List<PostMatchTeam> getPostByAddress(String tt, String qh) {
+        tt = convertString(tt);
+        qh = convertString(qh);
+        return postMatchTeamRepository.findPostByAddress(qh);
+    }
+
+    @Override
+    public List<PostMatchTeam> getByPlayTimeAndLevelWant(String actionTime, String level) {
+        if(actionTime.equals("All") && !level.equals("All")) {
+            return postMatchTeamRepository.findByLevel("%"+level+"%");
+        }
+        if(!actionTime.equals("All") && level.equals("All")) {
+            return postMatchTeamRepository.findByPlayTime(actionTime);
+        }
+        if(!actionTime.equals("All") && !level.equals("All"))
+        {
+            return postMatchTeamRepository.findByPlayTimeAndLevel(actionTime,"%"+level+"%");
+        }
+        return postMatchTeamRepository.findAll();
+    }
+
+    @Override
     public Integer getSlWaitPostDel(Integer football_id) {
         return postMatchTeamRepository.findSlWaitPostDel(football_id);
     }
@@ -72,6 +99,14 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     @Override
     public PostMatchTeam getInfo(Integer request_match_id) {
         return postMatchTeamRepository.getInFo(request_match_id);
+    }
+
+    public String convertString(String m)
+    {
+        m = m.trim();
+        String [] tt = m.split(" ");
+        String tmp = "%" + tt[tt.length - 2] +" "+tt[tt.length-1] + "%";
+        return tmp;
     }
 }
 

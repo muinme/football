@@ -77,4 +77,41 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
         return teamFootBallRepository.findByUsername(username);
     }
 
+    @Override
+    public List<String> findActionTime() {
+        return teamFootBallRepository.findActionTime();
+    }
+
+    @Override
+    public List<TeamFootBall> getTeamByAddress(String tt, String qh) {
+         tt = convertString(tt);
+         qh = convertString(qh);
+         return teamFootBallRepository.findTeamByAddress(qh);
+    }
+
+    @Override
+    public List<TeamFootBall> getByActionTimeAndLevel(String actionTime, String level) {
+        System.out.println(actionTime);
+        System.out.println(level);
+
+        if(actionTime.equals("All") && !level.equals("All")) {
+            return teamFootBallRepository.findByLevel("%"+level+"%");
+        }
+        if(!actionTime.equals("All") && level.equals("All")) {
+            return teamFootBallRepository.findByActionTime(actionTime);
+        }
+        if(!actionTime.equals("All") && !level.equals("All"))
+        {
+            return teamFootBallRepository.findByActionTimeAndLevel(actionTime,"%"+level+"%");
+        }
+        return teamFootBallRepository.findAll();
+    }
+
+    public String convertString(String m)
+    {
+        m = m.trim();
+        String [] tt = m.split(" ");
+        String tmp = "%" + tt[tt.length - 2] +" "+tt[tt.length-1] + "%";
+        return tmp;
+    }
 }
