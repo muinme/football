@@ -8,6 +8,8 @@ import java.util.List;
 public interface PitchService {
         Pitch createPitch(Pitch pitch, String username);
 
+        Pitch updateProfilePitch(Pitch pitch, Integer football_id);
+
         Pitch getByIdPitch(Integer id);
 
         void savePitch(Pitch pitch);

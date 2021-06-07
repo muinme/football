@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Value("${app.host}")
     private String host;
+
+    @Value("${app.hostWeb}")
+    private String hostWeb;
 
     @Autowired
     private UserRepository userRepository;
@@ -68,7 +72,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse) {
+    public String loginUser(UserDetails userDetails, HttpServletResponse httpServletResponse) throws ServletException {
+        String status = userRepository.findStatusByUserName(userDetails.getUsername());
+        System.out.println(status);
+        if(status.equals("Deactive"))
+        {
+            throw new ServletException("Error Accout");
+        }
         final String token = jwtUtil.generateToken(userDetails);
         cookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, host);
         return token;
@@ -148,7 +158,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User updateLoadAvatar(String url, String username) {
         User existingUser = userRepository.findByUsername(username);
-        existingUser.setImage(url);
+        existingUser.setImage(getString(url));
         return userRepository.save(existingUser);
+    }
+
+    public String getString(String m)
+    {
+        String tmp = "";
+        String tmp2 = "";
+        Integer k = 0;
+        for(int i = m.length()-1; i >= 0; i--)
+        {
+            char c = m.charAt(i);
+            System.out.println(c);
+            if(c == '\\')
+            {
+                k++;
+            }
+            if(k <2)
+            {
+                tmp += c;
+            }else {
+                tmp += c;
+                break;
+            }
+        }
+        for(int i = tmp.length()-1; i >= 0; i--) {
+            char c = tmp.charAt(i);
+            tmp2 += c;
+        }
+        return hostWeb + tmp2;
     }
 }

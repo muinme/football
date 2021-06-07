@@ -8,6 +8,7 @@ import com.example.football.repositories.HistoryMatchRepository;
 import com.example.football.repositories.PostMatchTeamRepository;
 import com.example.football.repositories.RequestMatchRepository;
 import com.example.football.services.HistoryMatchService;
+import com.example.football.services.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
 
     @Autowired
     private PostMatchTeamRepository postMatchTeamRepository;
+
+    @Autowired
+    private MailService mailService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -57,6 +61,7 @@ public class HistoryMatchServiceImpl implements HistoryMatchService {
         existPostMatchTeam.setStatus("0");
         postMatchTeamRepository.save(existPostMatchTeam);
         requestMatchRepository.save(existingRequestMatch);
+        mailService.sendEmailBatDoiThanhCong(id);
         return historyMatchRepository.save(historyMatch);
     }
 

@@ -17,6 +17,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "WHERE op.pitch_id =:id", nativeQuery = true)
     User findByPitchId(@Param("id") String id);
 
+    @Query(value = "SELECT status FROM users u \n" +
+            "WHERE u.username =:username", nativeQuery = true)
+    String findStatusByUserName(@Param("username") String username);
+
     @Query(value = " SELECT u.* FROM users u\n" +
             "    INNER JOIN caption c ON u.id  = c.user_id\n" +
             "    WHERE c.football_id = :id", nativeQuery = true)

@@ -29,6 +29,7 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     public PostMatchTeam createPostMatchTeam(PostMatchTeam postMatchTeam, String nameTeamFootBall) {
         postMatchTeam.setFootball_id(teamFootBallRepository.findIdByNameTeamFootBall(nameTeamFootBall));
         postMatchTeam.setCreated(new Date());
+        postMatchTeam.setStatus("1");
         return postMatchTeamRepository.save(postMatchTeam);
     }
 

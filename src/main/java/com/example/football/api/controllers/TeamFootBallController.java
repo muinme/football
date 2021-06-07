@@ -4,6 +4,7 @@ import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.Pitch;
 import com.example.football.models.TeamFootBall;
+import com.example.football.models.User;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
 import com.example.football.services.TeamFootBallService;
@@ -113,8 +114,6 @@ public class TeamFootBallController {
 
     @PostMapping("/teamFootBall/update/{id}")
     public ResponseEntity<?> update(@RequestBody TeamFootBall teamFootBall, @PathVariable Integer id){
-        try {
-            TeamFootBall existTeamFootBall = teamFootBallService.getByIdTeamFootBall(id);
             try{
                 teamFootBallService.saveTeamFootBall(teamFootBall);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -123,8 +122,16 @@ public class TeamFootBallController {
                 internalError.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
+
+    @RequestMapping(value = {"/teamFootBall/updateProfile/{id}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> updateProfileByUsername(@RequestBody TeamFootBall teamFootBall, @PathVariable Integer id) {
+        try {
+            return new ResponseEntity<>(teamFootBallService.updateProfileTeamFootBall(teamFootBall, id),HttpStatus.OK);
+        } catch (Exception internalError) {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

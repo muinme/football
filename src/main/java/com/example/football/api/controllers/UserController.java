@@ -7,21 +7,15 @@ import com.example.football.models.JwtResponse;
 import com.example.football.models.User;
 import com.example.football.services.AuthenticationService;
 import com.example.football.services.Impl.UserServiceImpl;
-import com.example.football.services.RequestMatchService;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -70,10 +64,6 @@ public class UserController {
         // Neu dung thi tiep tuc
         String username = jwtUtil.getUsernameFromToken(jwt);
         System.out.println("username in cookie = " + username);
-
-//        authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-//        String username = authenticationRequest.getUsername();
-
         httpServletRequest.setAttribute("username", username);
         return ResponseEntity.ok(new JwtResponse(userService.logoutUser(httpServletRequest, httpServletResponse)));
     }

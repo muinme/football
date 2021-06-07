@@ -3,6 +3,7 @@ package com.example.football.services.Impl;
 import com.example.football.models.*;
 import com.example.football.repositories.*;
 import com.example.football.services.HistoryRentalService;
+import com.example.football.services.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
     @Autowired
     private DetailPitchRepository detailPitchRepository;
 
+    @Autowired
+    private MailService mailService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -42,6 +46,7 @@ public class HistoryRentalServiceImpl implements HistoryRentalService {
         System.out.println(existDetailPitch);
         detailPitchRepository.save(existDetailPitch);
         requestPitchRepository.save(existingRequestPitch);
+        mailService.sendEmailDatSanThanhCong(id);
         return historyRentalRepository.save(historyRental);
 
     }

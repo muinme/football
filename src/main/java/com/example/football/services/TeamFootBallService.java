@@ -2,6 +2,7 @@ package com.example.football.services;
 
 import com.example.football.models.Pitch;
 import com.example.football.models.TeamFootBall;
+import com.example.football.models.User;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface TeamFootBallService {
 
     List<TeamFootBall> listAllTeamFootBall();
 
+    TeamFootBall updateProfileTeamFootBall(TeamFootBall teamFootBall, Integer football_id);
+
     TeamFootBall findNameTeam(Integer football_id);
 
     List<TeamFootBall> getTeamByUsername(String username);
@@ -25,5 +28,9 @@ public interface TeamFootBallService {
     List<TeamFootBall> getTeamByAddress(String tt, String qh);
 
     List<TeamFootBall> getByActionTimeAndLevel(String actionTime, String level);
+
+    TeamFootBall updateLoadAvatarTeam(String url, Integer football_id);
+
+    TeamFootBall updateLoadLogoTeam(String url, Integer football_id);
 
 }

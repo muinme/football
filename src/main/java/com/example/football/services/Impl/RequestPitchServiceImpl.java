@@ -34,7 +34,7 @@ public class RequestPitchServiceImpl implements RequestPitchService {
         requestPitch.setUser_id(user_id);
         requestPitch.setCreated(new Date());
         requestPitch.setStatus("0");
-//        mailService.sendEmailBatDoi(username, id);
+        mailService.sendEmailDatSan(username, pitch_id);
         return requestPitchRepository.save(requestPitch);
     }
     @Override

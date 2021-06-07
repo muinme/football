@@ -3,6 +3,7 @@ package com.example.football.api.controllers;
 import com.example.football.infrastructure.security.CookieUtil;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.Pitch;
+import com.example.football.models.TeamFootBall;
 import com.example.football.services.Impl.UserServiceImpl;
 import com.example.football.services.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,16 @@ public class PitchController {
             return new ResponseEntity<Pitch>(pitch, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<Pitch>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = {"/pitch/updateProfile/{id}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> updateProfilePitch(@RequestBody Pitch pitch, @PathVariable Integer id) {
+        try {
+            return new ResponseEntity<>(pitchService.updateProfilePitch(pitch, id),HttpStatus.OK);
+        } catch (Exception internalError) {
+            internalError.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

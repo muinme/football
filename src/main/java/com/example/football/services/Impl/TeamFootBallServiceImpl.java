@@ -1,10 +1,7 @@
 package com.example.football.services.Impl;
 
 import com.example.football.infrastructure.security.JwtUtil;
-import com.example.football.models.Caption;
-import com.example.football.models.OwnerPitch;
-import com.example.football.models.Pitch;
-import com.example.football.models.TeamFootBall;
+import com.example.football.models.*;
 import com.example.football.repositories.CaptionRepository;
 import com.example.football.repositories.OwnerPitchRepository;
 import com.example.football.repositories.TeamFootBallRepository;
@@ -68,6 +65,22 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
     }
 
     @Override
+    public TeamFootBall updateProfileTeamFootBall(TeamFootBall teamFootBall, Integer football_id) {
+        TeamFootBall existingTeam = teamFootBallRepository.findNameTeam(football_id);
+        existingTeam.setCreated(new Date());
+        if( teamFootBall.getActiontime() != null ) {
+            existingTeam.setActiontime(teamFootBall.getActiontime());
+        }
+        existingTeam.setAddress(teamFootBall.getAddress());
+        existingTeam.setAgemax(teamFootBall.getAgemax());
+        existingTeam.setAgemin(teamFootBall.getAgemin());
+        existingTeam.setIntroduce(teamFootBall.getIntroduce());
+        existingTeam.setLevel(teamFootBall.getLevel());
+        existingTeam.setHomeyard(teamFootBall.getHomeyard());
+        return teamFootBallRepository.save(existingTeam);
+    }
+
+    @Override
     public TeamFootBall findNameTeam(Integer football_id) {
         return teamFootBallRepository.findNameTeam(football_id);
     }
@@ -105,6 +118,30 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
             return teamFootBallRepository.findByActionTimeAndLevel(actionTime,"%"+level+"%");
         }
         return teamFootBallRepository.findAll();
+    }
+
+    @Override
+    public TeamFootBall updateLoadAvatarTeam(String url, Integer football_id) {
+        TeamFootBall existingTeam = teamFootBallRepository.findNameTeam(football_id);
+        if(url != null) {
+            existingTeam.setImage(url);
+            TeamFootBall l = teamFootBallRepository.save(existingTeam);
+            return l;
+        }else return null;
+    }
+
+    @Override
+    public TeamFootBall updateLoadLogoTeam(String url, Integer football_id) {
+
+        System.out.println(url + " " + football_id);
+        TeamFootBall existingTeam = teamFootBallRepository.findNameTeam(football_id);
+        System.out.println("ban dau  " +existingTeam);
+        if(url != null) {
+            existingTeam.setLogo(url);
+            System.out.println("saudo " + existingTeam);
+            TeamFootBall l = teamFootBallRepository.save(existingTeam);
+            return l;
+        }else return null;
     }
 
     public String convertString(String m)

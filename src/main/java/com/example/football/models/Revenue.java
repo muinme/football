@@ -14,5 +14,6 @@ public class Revenue {
     private Integer pitch_id;
     private double money_revenue;
     private java.util.Date created;
+    private Integer number_pitch_id;
 
 }

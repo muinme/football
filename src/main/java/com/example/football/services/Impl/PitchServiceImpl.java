@@ -3,6 +3,7 @@ package com.example.football.services.Impl;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.OwnerPitch;
 import com.example.football.models.Pitch;
+import com.example.football.models.TeamFootBall;
 import com.example.football.repositories.OwnerPitchRepository;
 import com.example.football.repositories.PitchRepository;
 import com.example.football.repositories.UserRepository;
@@ -44,6 +45,22 @@ public class PitchServiceImpl implements PitchService {
         ownerPitch.setCreated(new Date());
         ownerPitchRepository.save(ownerPitch);
         return pitch;
+    }
+
+    @Override
+    public Pitch updateProfilePitch(Pitch pitch, Integer pitch_id) {
+        Pitch existingPitch = pitchRepository.findById(pitch_id).get();
+        existingPitch.setCreated(new Date());
+        existingPitch.setAddress(pitch.getAddress());
+        existingPitch.setGooglemap(pitch.getGooglemap());
+        existingPitch.setType(pitch.getType());
+        existingPitch.setEmail(pitch.getEmail());
+        existingPitch.setPhone(pitch.getPhone());
+        existingPitch.setIntroduce(pitch.getIntroduce());
+        existingPitch.setFacebook(pitch.getFacebook());
+        existingPitch.setName(pitch.getName());
+        existingPitch.setIntroduce(pitch.getIntroduce());
+        return pitchRepository.save(existingPitch);
     }
 
 
