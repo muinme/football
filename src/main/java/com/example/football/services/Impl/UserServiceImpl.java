@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Value("${app.hostWeb}")
     private String hostWeb;
 
-    @Value("${app.syncOptionsImportFile}")
-    private String syncOptionsImportFile;
+    @Value("${app.upload_folder}")
+    private String upload_folder;
 
     @Autowired
     private UserRepository userRepository;
@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public String getString(String m)
     {
-        String result = hostWeb +  m.substring(syncOptionsImportFile.length(),m.length());
+        String result = hostWeb +  m.substring(upload_folder.length(),m.length());
             return result;
     }
 }
