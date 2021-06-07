@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Value("${app.hostWeb}")
     private String hostWeb;
 
+    @Value("${app.syncOptionsImportFile}")
+    private String syncOptionsImportFile;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -164,29 +167,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public String getString(String m)
     {
-        String tmp = "";
-        String tmp2 = "";
-        Integer k = 0;
-        for(int i = m.length()-1; i >= 0; i--)
-        {
-            char c = m.charAt(i);
-            System.out.println(c);
-            if(c == '\\')
-            {
-                k++;
-            }
-            if(k <2)
-            {
-                tmp += c;
-            }else {
-                tmp += c;
-                break;
-            }
-        }
-        for(int i = tmp.length()-1; i >= 0; i--) {
-            char c = tmp.charAt(i);
-            tmp2 += c;
-        }
-        return hostWeb + tmp2;
+        String result = hostWeb +  m.substring(syncOptionsImportFile.length(),m.length());
+            return result;
     }
 }
