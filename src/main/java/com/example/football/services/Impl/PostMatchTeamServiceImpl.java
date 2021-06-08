@@ -61,6 +61,11 @@ public class PostMatchTeamServiceImpl implements PostMatchTeamService {
     }
 
     @Override
+    public List<PostMatchTeam> listFindByFootBallId(Integer football_id) {
+        return postMatchTeamRepository.findPostMatchTeamByFootBallId(football_id);
+    }
+
+    @Override
     public Integer getSlWaitPost(Integer football_id) {
         return postMatchTeamRepository.findSlWaitPost(football_id);
     }

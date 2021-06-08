@@ -17,6 +17,10 @@ public interface PostMatchTeamRepository extends JpaRepository<PostMatchTeam, In
             "WHERE w.status =\"1\"", nativeQuery = true)
     List<PostMatchTeam> findListPostMatchTeam();
 
+    @Query(value = "SELECT * FROM wait_match_team w\n" +
+            "WHERE w.football_id=:football_id", nativeQuery = true)
+    List<PostMatchTeam> findPostMatchTeamByFootBallId(@Param("football_id") Integer football_id);
+
     @Query(value = "SELECT * FROM wait_match_team wmt \n" +
             "INNER JOIN teamfootballs t ON t.id = wmt.football_id \n" +
             "INNER JOIN caption c ON c.football_id = t.id \n" +

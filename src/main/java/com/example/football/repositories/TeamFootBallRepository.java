@@ -46,4 +46,10 @@ public interface TeamFootBallRepository extends JpaRepository<TeamFootBall, Inte
     @Query(value = "SELECT * FROM teamfootballs t\n" +
             "WHERE t.actiontime =:actiontime AND t.level LIKE :level", nativeQuery = true)
     List<TeamFootBall> findByActionTimeAndLevel(@Param("actiontime") String actiontime, @Param("level") String level);
+
+    @Query(value = "SELECT COUNT(*) FROM teamfootballs t\n" +
+            "            INNER JOIN caption c ON c.football_id = t.id\n" +
+            "            INNER JOIN users u ON u.id = c.user_id\n" +
+            "           WHERE u.username =:username", nativeQuery = true)
+    Integer findSlTeam(@Param("username") String username);
 }

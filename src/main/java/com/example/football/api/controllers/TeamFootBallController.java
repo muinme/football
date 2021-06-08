@@ -96,6 +96,21 @@ public class TeamFootBallController {
         return teamFootBallService.getTeamByUsername(username);
     }
 
+    @RequestMapping(value = {"/teamFootBall/sl/Username"}, method = RequestMethod.GET)
+    public Integer getSlTeam(HttpServletRequest httpServletRequest) {
+        String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
+        if(null == jwt) {
+            System.out.println("Chua login | khong the lay token trong cookie");
+            // TODO return;
+        }
+        // kiem tra token duoc luu trong redis xem co hay khong
+        // TODO
+        // Neu dung thi tiep tuc
+        String username = jwtUtil.getUsernameFromToken(jwt);
+        System.out.println("username in cookie = " + username);
+        return teamFootBallService.getSlTeam(username);
+    }
+
     @PostMapping("/teamFootBall/create")
     public TeamFootBall create(@RequestBody TeamFootBall teamFootBall, HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);

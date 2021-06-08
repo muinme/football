@@ -45,7 +45,7 @@ public class PostMatchTeamController {
         }
     }
     @RequestMapping(value = {"/postMatchTeam/Username"}, method = RequestMethod.GET)
-    public List<PostMatchTeam> getPitch(HttpServletRequest httpServletRequest) {
+    public List<PostMatchTeam> getPostByUsername(HttpServletRequest httpServletRequest) {
         String jwt = cookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
         if(null == jwt) {
             System.out.println("Chua login | khong the lay token trong cookie");
@@ -57,6 +57,10 @@ public class PostMatchTeamController {
         String username = jwtUtil.getUsernameFromToken(jwt);
         System.out.println("username in cookie = " + username);
         return postMatchTeamService.listFindByUsername(username);
+    }
+    @RequestMapping(value = {"/postMatchTeam/getByFootBallId/{football_id}"}, method = RequestMethod.GET)
+    public List<PostMatchTeam> getPostByFootBallId( @PathVariable Integer football_id) {
+        return postMatchTeamService.listFindByFootBallId(football_id);
     }
 
     @RequestMapping(value = {"/postMatchTeam/create/{nameTeamFootBall}"}, method = RequestMethod.POST)

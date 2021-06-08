@@ -142,6 +142,11 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
         return teamFootBallRepository.save(existingTeam);
     }
 
+    @Override
+    public Integer getSlTeam(String username) {
+        return teamFootBallRepository.findSlTeam(username);
+    }
+
     public String convertString(String m)
     {
         m = m.trim();

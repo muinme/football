@@ -33,4 +33,6 @@ public interface TeamFootBallService {
 
     TeamFootBall updateLoadLogoTeam(String url, Integer football_id);
 
+    Integer getSlTeam(String username);
+
 }
