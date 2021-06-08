@@ -8,7 +8,9 @@ import java.util.List;
 public interface PitchService {
         Pitch createPitch(Pitch pitch, String username);
 
-        Pitch updateProfilePitch(Pitch pitch, Integer football_id);
+        Pitch updateProfilePitch(Pitch pitch, Integer pitch_id);
+
+        Pitch updateLoadAvatarPitch(String url, Integer pitch_id);
 
         Pitch getByIdPitch(Integer id);
 

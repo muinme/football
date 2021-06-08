@@ -14,5 +14,7 @@ public interface MailService {
     String sendEmailDatSanThanhCong(Integer request_pitch_id);
 
     String sendEmailBatDoiThanhCong(Integer  request_match_id);
+
+    String sendEmailResetAccount(String username);
 }
 

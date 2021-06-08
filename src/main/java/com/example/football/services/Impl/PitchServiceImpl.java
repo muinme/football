@@ -3,20 +3,25 @@ package com.example.football.services.Impl;
 import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.OwnerPitch;
 import com.example.football.models.Pitch;
-import com.example.football.models.TeamFootBall;
 import com.example.football.repositories.OwnerPitchRepository;
 import com.example.football.repositories.PitchRepository;
 import com.example.football.repositories.UserRepository;
 import com.example.football.services.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class PitchServiceImpl implements PitchService {
+
+    @Value("${app.hostWeb}")
+    private String hostWeb;
+
+    @Value("${app.upload_folder}")
+    private String upload_folder;
 
     @Autowired
     private PitchRepository pitchRepository;
@@ -63,6 +68,19 @@ public class PitchServiceImpl implements PitchService {
         return pitchRepository.save(existingPitch);
     }
 
+    @Override
+    public Pitch updateLoadAvatarPitch(String url, Integer pitch_id) {
+        Pitch existingPitch = pitchRepository.findPitch(pitch_id);
+        existingPitch.setImage(getString(url));
+        System.out.println(existingPitch);
+        return pitchRepository.save(existingPitch);
+    }
+
+    public String getString(String m)
+    {
+        String result = hostWeb +  m.substring(upload_folder.length(),m.length());
+        return result;
+    }
 
     @Override
     public Pitch getByIdPitch(Integer id) {

@@ -92,6 +92,16 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(value = {"/user/resetAccount/{username}"}, method = RequestMethod.GET)
+    public ResponseEntity<User> resetAccount(@PathVariable String username) {
+        try {
+            User user = userService.resetAccount(username);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+    }
     @RequestMapping(value = {"/userByPitchId/{id}"}, method = RequestMethod.GET)
     public ResponseEntity<User> getByPitchIdId(@PathVariable String id) {
         try {

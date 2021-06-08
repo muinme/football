@@ -123,4 +123,21 @@ public class MailServiceImpl implements MailService {
         return "Email sent";
 
     }
+
+    @Override
+    public String sendEmailResetAccount(String username) {
+        User user = userRepository.findByUsername(username);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("<FOOTBALL>ResetAcount");
+        message.setText("Dear "+ user.getFullname() + "," + "\n" +
+                "\n" +
+                "Password:123456 \n" +
+                "Please visit the website http://traibonglan.com to change password! Thank you \n" +
+                "\n" +
+                "System sincerely,\n" +
+                "Admin");
+        this.emailSender.send(message);
+        return "Email sent";
+    }
 }

@@ -8,6 +8,7 @@ import com.example.football.repositories.TeamFootBallRepository;
 import com.example.football.repositories.UserRepository;
 import com.example.football.services.TeamFootBallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -15,6 +16,13 @@ import java.util.List;
 
 @Service
 public class TeamFootBallServiceImpl implements TeamFootBallService {
+
+    @Value("${app.hostWeb}")
+    private String hostWeb;
+
+    @Value("${app.upload_folder}")
+    private String upload_folder;
+
     @Autowired
     private TeamFootBallRepository teamFootBallRepository;
 
@@ -123,25 +131,15 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
     @Override
     public TeamFootBall updateLoadAvatarTeam(String url, Integer football_id) {
         TeamFootBall existingTeam = teamFootBallRepository.findNameTeam(football_id);
-        if(url != null) {
-            existingTeam.setImage(url);
-            TeamFootBall l = teamFootBallRepository.save(existingTeam);
-            return l;
-        }else return null;
+        existingTeam.setImage(getString(url));
+        return teamFootBallRepository.save(existingTeam);
     }
 
     @Override
     public TeamFootBall updateLoadLogoTeam(String url, Integer football_id) {
-
-        System.out.println(url + " " + football_id);
         TeamFootBall existingTeam = teamFootBallRepository.findNameTeam(football_id);
-        System.out.println("ban dau  " +existingTeam);
-        if(url != null) {
-            existingTeam.setLogo(url);
-            System.out.println("saudo " + existingTeam);
-            TeamFootBall l = teamFootBallRepository.save(existingTeam);
-            return l;
-        }else return null;
+        existingTeam.setLogo(getString(url));
+        return teamFootBallRepository.save(existingTeam);
     }
 
     public String convertString(String m)
@@ -150,5 +148,10 @@ public class TeamFootBallServiceImpl implements TeamFootBallService {
         String [] tt = m.split(" ");
         String tmp = "%" + tt[tt.length - 2] +" "+tt[tt.length-1] + "%";
         return tmp;
+    }
+    public String getString(String m)
+    {
+        String result = hostWeb +  m.substring(upload_folder.length(),m.length());
+        return result;
     }
 }

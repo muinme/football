@@ -37,5 +37,7 @@ public interface UserService {
 
     User updateStatusUser2(Integer id);
 
+    User resetAccount(String username);
+
     User updateLoadAvatar(String url, String username);
 }

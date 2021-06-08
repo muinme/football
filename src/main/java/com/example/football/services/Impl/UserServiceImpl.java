@@ -5,6 +5,7 @@ import com.example.football.infrastructure.security.JwtUtil;
 import com.example.football.models.User;
 import com.example.football.repositories.DetailPitchRepository;
 import com.example.football.repositories.UserRepository;
+import com.example.football.services.MailService;
 import com.example.football.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +44,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private CookieUtil cookieUtil;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -156,6 +160,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User  existingUser = userRepository.findById(id).get();
         existingUser.setStatus("Deactive");
         return userRepository.save(existingUser);
+    }
+
+    @Override
+    public User resetAccount(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+        mailService.sendEmailResetAccount(username);
+        userRepository.save(user);
+        return  userRepository.save(user);
     }
 
     @Override

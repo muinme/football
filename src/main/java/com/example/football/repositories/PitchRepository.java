@@ -27,4 +27,8 @@ public interface PitchRepository extends JpaRepository<Pitch, Integer> {
             "WHERE p.address LIKE :qh", nativeQuery = true)
     List<Pitch> findPitchByAddress(@Param("qh") String qh);
 
+    @Query(value = "SELECT * FROM pitchs p \n" +
+            "WHERE p.id=:pitch_id",nativeQuery = true)
+    Pitch findPitch(@Param("pitch_id") Integer id);
+
 }
